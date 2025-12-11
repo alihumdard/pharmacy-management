@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- SIDEBAR (MOBILE SLIDE + DESKTOP FIXED) -->
+    <aside id="sidebar" class="w-64 h-screen bg-white shadow-lg p-5 overflow-y-auto
+        transform -translate-x-full md:translate-x-0 transition-all duration-300
+        fixed top-0 left-0 z-50 md:z-40">
+
+        <div class="flex items-center gap-2 mb-6">
+            <i class="fa-solid fa-hospital text-blue-600 text-2xl"></i>
+            <h1 class="text-3xl font-bold">Hospital</h1>
+        </div>
+        <div class="mb-4 flex">
+            <img src="/assets/images/images (3).jpg" class="w-12 h-12 rounded-full mr-3" alt="">
+            <div>
+                <p class="font-semibold text-[var(--text-dark)]">User Name</p>
+                <p class="text-sm text-[var(--text-light)]">@Pharmacy Name</p>
+            </div>
+        </div>
+        <hr class="mb-3">
+
+        <nav class="space-y-2 text-black">
+
+            <a href="Dashboard.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+
+            <a href="POS.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-cart-shopping"></i> POS
+            </a>
+
+            <a href="Inventory.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-boxes-stacked"></i> Inventory
+            </a>
+
+            <a href="Reports.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-chart-line"></i> Reports
+            </a>
+            <a href="Settings.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+
+            <a href="Customers.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-users"></i> Customers
+            </a>
+            <a href="Login.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+            </a>
+            <a href="Medicine-Database.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-capsules"></i> M.Database
+            </a>
+            <a href="Supplier.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-supple"></i> Suppliers
+            </a>
+            <a href="Branch-Management.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-code-branch"></i> B.Management
+            </a>
+            <a href="User-Rules&Permission.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]"><i
+                    class="fa-solid fa-scale-balanced"></i> Rules&Permission</a>
+            <a href="Sales.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-salesforce"></i> Sales
+            </a>
+
+            <a href="Purchases.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-file-invoice"></i> Purchases
+            </a>
+
+            <p class="mt-4 font-bold text-[var(--text-dark)] text-md">System</p>
+
+            <a href="index.html"
+                class="flex items-center gap-2 px-4 py-2 rounded bg-[var(--primary-light)] text-[var(--primary)]">
+                <i class="fa-solid fa-list-check"></i> Audit Log
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- DARK OVERLAY (Mobile only) -->
+    <div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 md:pl-64">
+
+        <!-- NAVBAR (ALWAYS FIXED TOP) -->
+        <header class="fixed top-0 left-0 right-0 md:left-64 bg-white shadow p-4
+                       flex justify-between items-center z-40">
+
+            <!-- Mobile Button -->
+            <button class="md:hidden text-2xl" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Title -->
+            <h2 class="text-xl font-bold text-black">Dashboard</h2>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-6 text-black text-xl">
+                <div class="relative cursor-pointer">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-600 rounded-full"></span>
+                </div>
+                <i class="fa-regular fa-circle-question cursor-pointer"></i>
+                <i class="fa-solid fa-right-from-bracket cursor-pointer"></i>
+            </div>
+
+        </header>
+
+        <!-- CONTENT ALWAYS STARTS JUST BELOW NAVBAR -->
+        <main class="overflow-y-auto p-5 bg-gray-100 mt-16 min-h-screen">
+
+            <!-- TOP CARDS -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+
+                <!-- CARD 1 -->
+                <div class="p-6 rounded-xl shadow-lg text-white bg-gradient-to-br from-blue-400 to-blue-700">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-cart-shopping text-3xl"></i>
+                        <div>
+                            <p class="text-sm opacity-90">Today's Sales</p>
+                            <h2 class="text-3xl font-bold">PKR 50,000</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 2 -->
+                <div class="p-6 rounded-xl shadow-lg text-white bg-gradient-to-br from-red-400 to-red-600">
+                    <div class="flex items-center gap-3 pt-4">
+                        <i class="fa-solid fa-triangle-exclamation text-3xl"></i>
+                        <div>
+                            <p class="text-sm opacity-90">Low Stock Alerts</p>
+                            <h2 class="text-3xl font-bold">15 Items</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 3 -->
+                <div class="p-6 rounded-xl shadow-lg text-white bg-gradient-to-br from-yellow-400 to-yellow-600">
+                    <div class="flex items-center gap-3 pt-4">
+                        <i class="fa-solid fa-hourglass-start text-3xl"></i>
+                        <div>
+                            <p class="text-sm opacity-90">Expiring Soon</p>
+                            <h2 class="text-3xl font-bold">5 Batches</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CARD 4 -->
+                <div class="p-6 rounded-xl shadow-lg text-white bg-gradient-to-br from-emerald-400 to-emerald-600">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-sack-dollar text-3xl"></i>
+                        <div>
+                            <p class="text-sm opacity-90">Pending Credit</p>
+                            <h2 class="text-3xl font-bold">PKR 20,000</h2>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- GRAPH CARD -->
+            <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-xl font-semibold text-gray-700">Weekly Sales Trend</h2>
+
+                    <select
+                        class="px-3 py-2 rounded-lg border bg-gray-50 text-gray-700 hover:bg-gray-100 cursor-pointer">
+                        <option>Next Month</option>
+                    </select>
+                </div>
+
+                <!-- Chart -->
+                <div class="h-80">
+                    <canvas id="salesChart"></canvas>
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- CUSTOMER MODAL -->
+
+
+
+
+    </div>
+    <!-- Modal Background -->
+
+    <script>
+    const ctx = document.getElementById('salesChart');
+
+    new Chart(ctx, {
+        type: 'line',
+
+        data: {
+            labels: [
+                "Jan 21",
+                "Tue 22",
+                "Wed 21",
+                "Thu 21",
+                "Fri 21",
+                "May 21",
+                "Jan 22",
+                "Mar 22"
+            ],
+
+            datasets: [{
+                data: [50, 370, 220, 620, 580, 910, 760, 740],
+                borderColor: "#4f8dfd",
+                backgroundColor: "rgba(79,141,253,0.18)",
+                borderWidth: 3,
+                pointRadius: 0,
+                tension: 0.45,     // Smooth curve
+                fill: true
+            }]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    grid: {
+                        color: "rgba(0,0,0,0.05)",
+                        lineWidth: 1
+                    },
+                    ticks: {
+                        color: "#444"
+                    }
+                },
+
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        color: "#444"
+                    }
+                }
+            },
+
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+</script>
+
+
+
+
+
+    <!-- SIDEBAR SCRIPT -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("-translate-x-full");
+            document.getElementById("overlay").classList.toggle("hidden");
+        }
+    </script>
+
+</body>
+
+</html>

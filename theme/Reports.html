@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Reports</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- SIDEBAR (MOBILE SLIDE + DESKTOP FIXED) -->
+    <aside id="sidebar" class="w-64 h-screen bg-white shadow-lg p-5 overflow-y-auto
+        transform -translate-x-full md:translate-x-0 transition-all duration-300
+        fixed top-0 left-0 z-50 md:z-40">
+
+        <div class="flex items-center gap-2 mb-6">
+            <i class="fa-solid fa-hospital text-blue-600 text-2xl"></i>
+            <h1 class="text-3xl font-bold">Hospital</h1>
+        </div>
+        <div class="mb-4 flex">
+            <img src="/assets/images/images (3).jpg" class="w-12 h-12 rounded-full mr-3" alt="">
+            <div>
+                <p class="font-semibold text-[var(--text-dark)]">User Name</p>
+                <p class="text-sm text-[var(--text-light)]">@Pharmacy Name</p>
+            </div>
+        </div>
+        <hr class="mb-3">
+
+        <nav class="space-y-2 text-black">
+
+            <a href="Dashboard.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+
+            <a href="POS.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-cart-shopping"></i> POS
+            </a>
+
+            <a href="Inventory.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-boxes-stacked"></i> Inventory
+            </a>
+
+            <a href="Reports.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-chart-line"></i> Reports
+            </a>
+            <a href="Settings.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+
+            <a href="Customers.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-users"></i> Customers
+            </a>
+            <a href="Login.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+            </a>
+            <a href="Medicine-Database.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-capsules"></i> M.Database
+            </a>
+            <a href="Supplier.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-supple"></i> Suppliers
+            </a>
+            <a href="Branch-Management.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-code-branch"></i> B.Management
+            </a>
+            <a href="User-Rules&Permission.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]"><i
+                    class="fa-solid fa-scale-balanced"></i> Rules&Permission</a>
+            <a href="Sales.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-salesforce"></i> Sales
+            </a>
+
+            <a href="Purchases.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-file-invoice"></i> Purchases
+            </a>
+
+            <p class="mt-4 font-bold text-[var(--text-dark)] text-md">System</p>
+
+            <a href="index.html"
+                class="flex items-center gap-2 px-4 py-2 rounded bg-[var(--primary-light)] text-[var(--primary)]">
+                <i class="fa-solid fa-list-check"></i> Audit Log
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- DARK OVERLAY (Mobile only) -->
+    <div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 md:pl-64">
+
+        <!-- NAVBAR (ALWAYS FIXED TOP) -->
+        <header class="fixed top-0 left-0 right-0 md:left-64 bg-white shadow p-4
+                       flex justify-between items-center z-40">
+
+            <!-- Mobile Button -->
+            <button class="md:hidden text-2xl" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Title -->
+            <h2 class="text-xl font-bold text-black">Reports</h2>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-6 text-black text-xl">
+                <div class="relative cursor-pointer">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-600 rounded-full"></span>
+                </div>
+                <i class="fa-regular fa-circle-question cursor-pointer"></i>
+                <i class="fa-solid fa-right-from-bracket cursor-pointer"></i>
+            </div>
+
+        </header>
+
+        <!-- PAGE CONTENT -->
+    <main class="overflow-y-auto p-2 bg-gray-100 mt-16">
+  <div class="p-4 sm:p-6 bg-gray-100 min-h-screen">
+
+    <!-- SALES SUMMARY CARD -->
+    <div class="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-6xl mx-auto mb-6">
+
+      <!-- Header -->
+      <div class="flex flex-wrap justify-between items-center gap-3 mb-4">
+        <h2 class="text-lg sm:text-xl font-bold text-gray-800">Sales Summary</h2>
+
+        <button class="px-4 py-2 bg-gray-100 rounded-lg hover:bg-gray-200 
+                       text-gray-700 flex items-center gap-2 text-sm w-full sm:w-auto justify-center">
+          Last 6 Months
+          <i class="fa-solid fa-chevron-down text-xs"></i>
+        </button>
+      </div>
+
+      <!-- Chart (Scrollable on Mobile)-->
+      <div class="w-full overflow-x-auto">
+        <canvas id="salesChart" class="min-w-[500px] sm:min-w-full"></canvas>
+      </div>
+
+    </div>
+
+    <!-- TOP SELLING MEDICINES -->
+    <div class="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-6xl mx-auto">
+
+      <h2 class="text-lg sm:text-xl font-bold text-gray-800 mb-4 text-center sm:text-left">
+        Top Selling Medicines
+      </h2>
+
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-sm">
+          <thead>
+            <tr class="bg-gray-100 text-gray-700">
+              <th class="py-3 px-4 text-left font-semibold">Medicine Name</th>
+              <th class="py-3 px-4 text-left font-semibold">Quantity Sold</th>
+              <th class="py-3 px-4 text-left font-semibold">Total Revenue</th>
+            </tr>
+          </thead>
+
+          <tbody>
+
+            <tr class="border-b hover:bg-gray-50 transition">
+              <td class="py-3 px-4">Medicine Dnoestile</td>
+              <td class="py-3 px-4">205</td>
+              <td class="py-3 px-4">PKR 330.00</td>
+            </tr>
+
+            <tr class="border-b hover:bg-gray-50 transition">
+              <td class="py-3 px-4">Panadol Data</td>
+              <td class="py-3 px-4">250</td>
+              <td class="py-3 px-4">PKR 250.00</td>
+            </tr>
+
+            <!-- (Duplicate rows preserved as in your code) -->
+            <tr class="border-b hover:bg-gray-50 transition">
+              <td class="py-3 px-4">Panadol Data</td>
+              <td class="py-3 px-4">250</td>
+              <td class="py-3 px-4">PKR 250.00</td>
+            </tr>
+
+            <tr class="border-b hover:bg-gray-50 transition">
+              <td class="py-3 px-4">Panadol Data</td>
+              <td class="py-3 px-4">250</td>
+              <td class="py-3 px-4">PKR 250.00</td>
+            </tr>
+
+            <tr class="border-b hover:bg-gray-50 transition">
+              <td class="py-3 px-4">Panadol Data</td>
+              <td class="py-3 px-4">250</td>
+              <td class="py-3 px-4">PKR 250.00</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+</main>
+
+
+ 
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+  <script>
+        const ctx = document.getElementById('salesChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan 21', 'Feb 21', 'Mar 21', 'Apr 22', 'May 22', 'Jun 22'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [750, 900, 1100, 800, 1200, 950],
+                    backgroundColor: '#3B82F6',
+                    borderRadius: 6,
+                    barThickness: 80
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 250 }
+                    }
+                }
+            }
+        });
+    </script>
+    <!-- SIDEBAR SCRIPT -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("-translate-x-full");
+            document.getElementById("overlay").classList.toggle("hidden");
+        }
+    </script>
+
+
+
+
+
+</body>
+
+</html>

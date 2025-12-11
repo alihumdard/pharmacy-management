@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>User-Rules&Permission</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- SIDEBAR (MOBILE SLIDE + DESKTOP FIXED) -->
+    <aside id="sidebar" class="w-64 h-screen bg-white shadow-lg p-5 overflow-y-auto
+        transform -translate-x-full md:translate-x-0 transition-all duration-300
+        fixed top-0 left-0 z-50 md:z-40">
+
+        <div class="flex items-center gap-2 mb-6">
+            <i class="fa-solid fa-hospital text-blue-600 text-2xl"></i>
+            <h1 class="text-3xl font-bold">Hospital</h1>
+        </div>
+        <div class="mb-4 flex">
+            <img src="/assets/images/images (3).jpg" class="w-12 h-12 rounded-full mr-3" alt="">
+            <div>
+                <p class="font-semibold text-[var(--text-dark)]">User Name</p>
+                <p class="text-sm text-[var(--text-light)]">@Pharmacy Name</p>
+            </div>
+        </div>
+        <hr class="mb-3">
+
+        <nav class="space-y-2 text-black">
+
+            <a href="Dashboard.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+
+            <a href="POS.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-cart-shopping"></i> POS
+            </a>
+
+            <a href="Inventory.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-boxes-stacked"></i> Inventory
+            </a>
+
+            <a href="Reports.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-chart-line"></i> Reports
+            </a>
+            <a href="Settings.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+
+            <a href="Customers.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-users"></i> Customers
+            </a>
+            <a href="Login.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+            </a>
+            <a href="Medicine-Database.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-capsules"></i> M.Database
+            </a>
+            <a href="Supplier.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-supple"></i> Suppliers
+            </a>
+            <a href="Branch-Management.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-code-branch"></i> B.Management
+            </a>
+            <a href="User-Rules&Permission.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]"><i
+                    class="fa-solid fa-scale-balanced"></i> Rules&Permission</a>
+            <a href="Sales.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-salesforce"></i> Sales
+            </a>
+
+            <a href="Purchases.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-file-invoice"></i> Purchases
+            </a>
+
+            <p class="mt-4 font-bold text-[var(--text-dark)] text-md">System</p>
+
+            <a href="index.html"
+                class="flex items-center gap-2 px-4 py-2 rounded bg-[var(--primary-light)] text-[var(--primary)]">
+                <i class="fa-solid fa-list-check"></i> Audit Log
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- DARK OVERLAY (Mobile only) -->
+    <div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 md:pl-64">
+
+        <!-- NAVBAR (ALWAYS FIXED TOP) -->
+        <header class="fixed top-0 left-0 right-0 md:left-64 bg-white shadow p-4
+                       flex justify-between items-center z-40">
+
+            <!-- Mobile Button -->
+            <button class="md:hidden text-2xl" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Title -->
+            <h2 class="text-xl font-bold text-black">User Rules&Permission</h2>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-6 text-black text-xl">
+                <div class="relative cursor-pointer">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-600 rounded-full"></span>
+                </div>
+                <i class="fa-regular fa-circle-question cursor-pointer"></i>
+                <i class="fa-solid fa-right-from-bracket cursor-pointer"></i>
+            </div>
+
+        </header>
+
+        <!-- PAGE CONTENT -->
+
+        <main class="overflow-y-auto p-2 bg-gray-100 mt-16">
+            <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-xl p-6 mt-6">
+
+                <!-- Tabs -->
+                <div class="flex flex-wrap gap-6 border-b pb-3 text-sm font-medium text-gray-600">
+                    <button class="hover:text-blue-600">General</button>
+                    <button class="hover:text-blue-600">Currency & Tax</button>
+                    <button class="text-blue-600 border-b-2 border-blue-600">User Roles</button>
+                    <button class="hover:text-blue-600">Backup</button>
+                </div>
+
+                <!-- CONTENT -->
+                <div class="mt-6 flex flex-col lg:flex-row gap-8">
+
+                    <!-- ROLES LIST -->
+                    <div class="w-full lg:w-40 border-r lg:border-r pr-0 lg:pr-4 space-y-2">
+
+                        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100">
+                            Admin
+                        </button>
+
+                        <button class="w-full text-left px-3 py-2 rounded-lg bg-blue-50 
+                       text-blue-700 border border-blue-200">
+                            Manager
+                        </button>
+
+                        <button class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100">
+                            Cashier
+                        </button>
+
+                    </div>
+
+                    <!-- PERMISSIONS -->
+                    <div class="flex-1 space-y-6">
+
+                        <!-- Inventory -->
+                        <div>
+                            <h3 class="font-semibold mb-2">Inventory</h3>
+                            <div class="flex flex-wrap items-center gap-4 text-sm">
+                                <label class="flex items-center gap-2"><input type="checkbox"> View</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> Add</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> Edit</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> Delete</label>
+                            </div>
+                        </div>
+
+                        <!-- POS -->
+                        <div>
+                            <h3 class="font-semibold mb-2">POS</h3>
+                            <div class="flex flex-wrap items-center gap-4 text-sm">
+                                <label class="flex items-center gap-2"><input type="checkbox"> Process Sale</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> Give Discount</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> View Change</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> View puetis</label>
+                            </div>
+                        </div>
+
+                        <!-- Customers -->
+                        <div>
+                            <h3 class="font-semibold mb-2">Customers</h3>
+                            <div class="flex flex-wrap items-center gap-4 text-sm">
+                                <label class="flex items-center gap-2"><input type="checkbox"> View, Add, Edit
+                                    Item</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> Delete</label>
+                            </div>
+                        </div>
+
+                        <!-- Cashier Permissions -->
+                        <div>
+                            <h3 class="font-semibold mb-2">Cashier Permissions</h3>
+                            <div class="flex flex-wrap items-center gap-4 text-sm">
+                                <label class="flex items-center gap-2"><input type="checkbox"> View where</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> Edit Item</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> Edit</label>
+                                <label class="flex items-center gap-2"><input type="checkbox"> Delete</label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- SAVE BUTTON -->
+                <div class="flex justify-end mt-10">
+                    <button onclick="openUserModal()"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow">
+                        Save Permissions
+                    </button>
+                </div>
+
+            </div>
+        </main>
+        <div id="userModal" class="fixed inset-0 bg-black bg-opacity-40 hidden justify-center items-center z-50 p-4">
+
+            <div class="bg-white w-full max-w-3xl mx-auto mt-12 rounded-xl shadow-lg 
+                p-6 max-h-[90vh] overflow-y-auto">
+
+                <h2 class="text-xl font-semibold mb-6">Add New User</h2>
+
+                <!-- FORM GRID -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                    <div>
+                        <label class="text-sm font-medium">Full Name</label>
+                        <input type="text" placeholder="Full Name"
+                            class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 outline-none focus:ring focus:ring-blue-200">
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium">Email</label>
+                        <input type="email" placeholder="medicorp@sample.com"
+                            class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 outline-none focus:ring focus:ring-blue-200">
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium">Password</label>
+                        <input type="password" placeholder="Password"
+                            class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 outline-none focus:ring focus:ring-blue-200">
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium">Confirm Password</label>
+                        <input type="password" placeholder="Password"
+                            class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 outline-none focus:ring focus:ring-blue-200">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="text-sm font-medium">Assign Role</label>
+                        <select
+                            class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 outline-none focus:ring focus:ring-blue-200">
+                            <option>Admin</option>
+                            <option>Manager</option>
+                            <option>Cashier</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <!-- BUTTONS -->
+                <div class="flex justify-end gap-3 mt-8">
+                    <button onclick="closeUserModal()" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">
+                        Cancel
+                    </button>
+
+                    <button class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+                        Save User
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+    <script>
+        function openUserModal() {
+            document.getElementById("userModal").classList.remove("hidden");
+        }
+        function closeUserModal() {
+            document.getElementById("userModal").classList.add("hidden");
+        }
+    </script>
+    <!-- SIDEBAR SCRIPT -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("-translate-x-full");
+            document.getElementById("overlay").classList.toggle("hidden");
+        }
+    </script>
+
+
+
+
+
+</body>
+
+</html>

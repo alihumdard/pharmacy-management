@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Sales</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- SIDEBAR (MOBILE SLIDE + DESKTOP FIXED) -->
+    <aside id="sidebar" class="w-64 h-screen bg-white shadow-lg p-5 overflow-y-auto
+        transform -translate-x-full md:translate-x-0 transition-all duration-300
+        fixed top-0 left-0 z-50 md:z-40">
+
+        <div class="flex items-center gap-2 mb-6">
+            <i class="fa-solid fa-hospital text-blue-600 text-2xl"></i>
+            <h1 class="text-3xl font-bold">Hospital</h1>
+        </div>
+        <div class="mb-4 flex">
+            <img src="/assets/images/images (3).jpg" class="w-12 h-12 rounded-full mr-3" alt="">
+            <div>
+                <p class="font-semibold text-[var(--text-dark)]">User Name</p>
+                <p class="text-sm text-[var(--text-light)]">@Pharmacy Name</p>
+            </div>
+        </div>
+        <hr class="mb-3">
+
+        <nav class="space-y-2 text-black">
+
+            <a href="Dashboard.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+
+            <a href="POS.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-cart-shopping"></i> POS
+            </a>
+
+            <a href="Inventory.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-boxes-stacked"></i> Inventory
+            </a>
+
+            <a href="Reports.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-chart-line"></i> Reports
+            </a>
+            <a href="Settings.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+
+            <a href="Customers.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-users"></i> Customers
+            </a>
+            <a href="Login.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+            </a>
+            <a href="Medicine-Database.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-capsules"></i> M.Database
+            </a>
+            <a href="Supplier.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-supple"></i> Suppliers
+            </a>
+            <a href="Branch-Management.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-code-branch"></i> B.Management
+            </a>
+            <a href="User-Rules&Permission.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]"><i
+                    class="fa-solid fa-scale-balanced"></i> Rules&Permission</a>
+            <a href="Sales.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-salesforce"></i> Sales
+            </a>
+
+            <a href="Purchases.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-file-invoice"></i> Purchases
+            </a>
+
+            <p class="mt-4 font-bold text-[var(--text-dark)] text-md">System</p>
+
+            <a href="index.html"
+                class="flex items-center gap-2 px-4 py-2 rounded bg-[var(--primary-light)] text-[var(--primary)]">
+                <i class="fa-solid fa-list-check"></i> Audit Log
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- DARK OVERLAY (Mobile only) -->
+    <div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 md:pl-64">
+
+        <!-- NAVBAR (ALWAYS FIXED TOP) -->
+        <header class="fixed top-0 left-0 right-0 md:left-64 bg-white shadow p-4
+                       flex justify-between items-center z-40">
+
+            <!-- Mobile Button -->
+            <button class="md:hidden text-2xl" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Title -->
+            <h2 class="text-xl font-bold text-black">Sales</h2>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-6 text-black text-xl">
+                <div class="relative cursor-pointer">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-600 rounded-full"></span>
+                </div>
+                <i class="fa-regular fa-circle-question cursor-pointer"></i>
+                <i class="fa-solid fa-right-from-bracket cursor-pointer"></i>
+            </div>
+
+        </header>
+
+        <!-- PAGE CONTENT -->
+   
+<main class="overflow-y-auto p-2 bg-gray-100 mt-16">
+  <div class="bg-gray-50 flex items-center justify-center p-4 sm:p-6">
+
+    <div class="w-full max-w-5xl h-[500px]">
+
+      <!-- Title -->
+      <h1 class="text-2xl sm:text-4xl font-bold text-gray-800 mb-6 sm:mb-10 text-center sm:text-left">
+        Pharmacy Management System
+      </h1>
+
+      <!-- GRID -->
+     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
+
+  <!-- Card 1 -->
+  <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <i class="fa-solid fa-pills text-4xl text-green-800"></i>
+    <span class="text-lg font-semibold text-gray-700">Medicines</span>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <i class="fa-solid fa-store text-4xl text-green-800"></i>
+    <span class="text-lg font-semibold text-gray-700">Sales</span>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <i class="fa-solid fa-user text-4xl text-green-800"></i>
+    <span class="text-lg font-semibold text-gray-700">Customers</span>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <i class="fa-solid fa-chart-pie text-4xl text-green-800"></i>
+    <span class="text-lg font-semibold text-gray-700">Purchases</span>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <i class="fa-solid fa-chart-line text-4xl text-green-800"></i>
+    <span class="text-lg font-semibold text-gray-700">Reports</span>
+  </div>
+
+  <!-- Card 6 -->
+  <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <i class="fa-solid fa-gear text-4xl text-green-800"></i>
+    <span class="text-lg font-semibold text-gray-700">Settings</span>
+  </div>
+
+</div>
+
+
+    </div>
+
+  </div>
+</main>
+
+
+ 
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+ 
+    <!-- SIDEBAR SCRIPT -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("-translate-x-full");
+            document.getElementById("overlay").classList.toggle("hidden");
+        }
+    </script>
+
+
+
+
+
+</body>
+
+</html>

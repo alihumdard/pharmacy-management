@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>Branch Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body class="bg-gray-100">
+
+    <!-- SIDEBAR (MOBILE SLIDE + DESKTOP FIXED) -->
+    <aside id="sidebar" class="w-64 h-screen bg-white shadow-lg p-5 overflow-y-auto
+        transform -translate-x-full md:translate-x-0 transition-all duration-300
+        fixed top-0 left-0 z-50 md:z-40">
+
+        <div class="flex items-center gap-2 mb-6">
+            <i class="fa-solid fa-hospital text-blue-600 text-2xl"></i>
+            <h1 class="text-3xl font-bold">Hospital</h1>
+        </div>
+        <div class="mb-4 flex">
+            <img src="/assets/images/images (3).jpg" class="w-12 h-12 rounded-full mr-3" alt="">
+            <div>
+                <p class="font-semibold text-[var(--text-dark)]">User Name</p>
+                <p class="text-sm text-[var(--text-light)]">@Pharmacy Name</p>
+            </div>
+        </div>
+        <hr class="mb-3">
+
+        <nav class="space-y-2 text-black">
+
+            <a href="Dashboard.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-house"></i> Dashboard
+            </a>
+
+            <a href="POS.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-cart-shopping"></i> POS
+            </a>
+
+            <a href="Inventory.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-boxes-stacked"></i> Inventory
+            </a>
+
+            <a href="Reports.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-gray-100">
+                <i class="fa-solid fa-chart-line"></i> Reports
+            </a>
+            <a href="Settings.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-gear"></i> Settings
+            </a>
+
+            <a href="Customers.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-users"></i> Customers
+            </a>
+            <a href="Login.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+            </a>
+            <a href="Medicine-Database.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-capsules"></i> M.Database
+            </a>
+            <a href="Supplier.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-supple"></i> Suppliers
+            </a>
+            <a href="Branch-Management.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-code-branch"></i> B.Management
+            </a>
+            <a href="User-Rules&Permission.html"
+                class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]"><i
+                    class="fa-solid fa-scale-balanced"></i> Rules&Permission</a>
+            <a href="Sales.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-brands fa-salesforce"></i> Sales
+            </a>
+
+            <a href="Purchases.html" class="flex items-center gap-2 px-4 py-2 rounded hover:bg-[var(--sidebar-hover)]">
+                <i class="fa-solid fa-file-invoice"></i> Purchases
+            </a>
+
+            <p class="mt-4 font-bold text-[var(--text-dark)] text-md">System</p>
+
+            <a href="index.html"
+                class="flex items-center gap-2 px-4 py-2 rounded bg-[var(--primary-light)] text-[var(--primary)]">
+                <i class="fa-solid fa-list-check"></i> Audit Log
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- DARK OVERLAY (Mobile only) -->
+    <div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40" onclick="toggleSidebar()"></div>
+
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 md:pl-64">
+
+        <!-- NAVBAR (ALWAYS FIXED TOP) -->
+        <header class="fixed top-0 left-0 right-0 md:left-64 bg-white shadow p-4
+                       flex justify-between items-center z-40">
+
+            <!-- Mobile Button -->
+            <button class="md:hidden text-2xl" onclick="toggleSidebar()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <!-- Title -->
+            <h2 class="text-xl font-bold text-black">Branch Management</h2>
+
+            <!-- Right Icons -->
+            <div class="flex items-center gap-6 text-black text-xl">
+                <div class="relative cursor-pointer">
+                    <i class="fa-regular fa-bell"></i>
+                    <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-600 rounded-full"></span>
+                </div>
+                <i class="fa-regular fa-circle-question cursor-pointer"></i>
+                <i class="fa-solid fa-right-from-bracket cursor-pointer"></i>
+            </div>
+
+        </header>
+
+        <!-- CONTENT ALWAYS STARTS JUST BELOW NAVBAR -->
+       <main class="p-2 bg-gray-100 mt-[60px]">
+    <div class="p-4">
+
+        <div class="bg-white rounded-xl shadow-md p-6 max-w-6xl mx-auto">
+
+            <!-- Top Controls -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5">
+
+                <!-- Search Bar -->
+                <div class="flex items-center bg-gray-100 px-3 py-[10px] border border-gray-300 rounded-lg w-full md:w-1/3">
+                    <i class="fa-solid fa-search text-gray-500"></i>
+                    <input type="text" placeholder="Search"
+                        class="bg-transparent outline-none text-sm w-full pl-2">
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex items-center gap-3 flex-wrap">
+
+                    <button
+                        class="px-4 py-2 bg-white border border-gray-300 rounded-lg flex items-center gap-2 hover:bg-gray-100 transition">
+                        <i class="fa-solid fa-filter text-gray-600"></i>
+                        <select class="bg-transparent outline-none text-sm">
+                            <option>Filter</option>
+                            <option>Hello</option>
+                            <option>Hello</option>
+                            <option>Hello</option>
+                        </select>
+                    </button>
+
+                    <button onclick="openBranchModal()"
+                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
+                        Add New Branch
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- Table Wrapper -->
+            <div class="overflow-x-auto">
+                <table class="w-full border-collapse text-sm">
+                    <thead>
+                        <tr class="bg-gray-100 text-left text-gray-700">
+                            <th class="py-3 px-4 font-semibold">Branch Name</th>
+                            <th class="py-3 px-4 font-semibold">Location</th>
+                            <th class="py-3 px-4 font-semibold">Phone</th>
+                            <th class="py-3 px-4 font-semibold">Manager</th>
+                            <th class="py-3 px-4 font-semibold">Status</th>
+                            <th class="py-3 px-4 font-semibold">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="py-2 px-4">Lahore Main Branch</td>
+                            <td class="py-2 px-4">Gulberg III, Lahore</td>
+                            <td class="py-2 px-4">+92 42 35751234</td>
+                            <td class="py-2 px-4">Ahmed Ali</td>
+                            <td class="py-2 px-4">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                                    Active
+                                </span>
+                            </td>
+                            <td class="py-2 px-4 flex gap-2">
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">✏️</button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">👁️</button>
+                                <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 rounded">⋮</button>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="py-2 px-4">Lahore Main Branch</td>
+                            <td class="py-2 px-4">Gulberg III, Lahore</td>
+                            <td class="py-2 px-4">+92 42 35751234</td>
+                            <td class="py-2 px-4">Ahmed Ali</td>
+                            <td class="py-2 px-4">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                                    Active
+                                </span>
+                            </td>
+                            <td class="py-2 px-4 flex gap-2">
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">✏️</button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">👁️</button>
+                                <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 rounded">⋮</button>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="py-2 px-4">Lahore Main Branch</td>
+                            <td class="py-2 px-4">Gulberg III, Lahore</td>
+                            <td class="py-2 px-4">+92 42 35751234</td>
+                            <td class="py-2 px-4">Ahmed Ali</td>
+                            <td class="py-2 px-4">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                                    Active
+                                </span>
+                            </td>
+                            <td class="py-2 px-4 flex gap-2">
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">✏️</button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">👁️</button>
+                                <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 rounded">⋮</button>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="py-2 px-4">Lahore Main Branch</td>
+                            <td class="py-2 px-4">Gulberg III, Lahore</td>
+                            <td class="py-2 px-4">+92 42 35751234</td>
+                            <td class="py-2 px-4">Ahmed Ali</td>
+                            <td class="py-2 px-4">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                                    Active
+                                </span>
+                            </td>
+                            <td class="py-2 px-4 flex gap-2">
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">✏️</button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">👁️</button>
+                                <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 rounded">⋮</button>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="py-2 px-4">Lahore Main Branch</td>
+                            <td class="py-2 px-4">Gulberg III, Lahore</td>
+                            <td class="py-2 px-4">+92 42 35751234</td>
+                            <td class="py-2 px-4">Ahmed Ali</td>
+                            <td class="py-2 px-4">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                                    Active
+                                </span>
+                            </td>
+                            <td class="py-2 px-4 flex gap-2">
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">✏️</button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">👁️</button>
+                                <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 rounded">⋮</button>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="py-2 px-4">Lahore Main Branch</td>
+                            <td class="py-2 px-4">Gulberg III, Lahore</td>
+                            <td class="py-2 px-4">+92 42 35751234</td>
+                            <td class="py-2 px-4">Ahmed Ali</td>
+                            <td class="py-2 px-4">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                                    Active
+                                </span>
+                            </td>
+                            <td class="py-2 px-4 flex gap-2">
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">✏️</button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">👁️</button>
+                                <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 rounded">⋮</button>
+                            </td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50 transition">
+                            <td class="py-2 px-4">Lahore Main Branch</td>
+                            <td class="py-2 px-4">Gulberg III, Lahore</td>
+                            <td class="py-2 px-4">+92 42 35751234</td>
+                            <td class="py-2 px-4">Ahmed Ali</td>
+                            <td class="py-2 px-4">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs">
+                                    Active
+                                </span>
+                            </td>
+                            <td class="py-2 px-4 flex gap-2">
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">✏️</button>
+                                <button class="p-2 bg-gray-100 hover:bg-gray-200 rounded">👁️</button>
+                                <button class="p-2 px-4 bg-gray-100 hover:bg-gray-200 rounded">⋮</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</main>
+<div id="branchModal"
+    class="fixed inset-0 bg-black bg-opacity-40 hidden justify-center items-center z-50 p-4 transition">
+
+    <!-- Modal Box -->
+    <div
+        class="bg-white w-full max-w-[850px] max-h-[80vh] mx-auto mt-12 overflow-y-auto rounded-xl shadow-xl p-6 transform transition-all duration-300 scale-95 opacity-0"
+        id="branchModalBox">
+
+        <h2 class="text-2xl font-semibold mb-6">Add New Branch</h2>
+
+        <!-- Form Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <div>
+                <label class="text-sm font-medium">Branch Name</label>
+                <input type="text" placeholder="Branch Name"
+                    class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 focus:ring focus:ring-blue-200 outline-none">
+            </div>
+
+            <div>
+                <label class="text-sm font-medium">Location / Address</label>
+                <textarea rows="2" placeholder="Location / Address"
+                    class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 resize-none focus:ring focus:ring-blue-200 outline-none"></textarea>
+            </div>
+
+            <div>
+                <label class="text-sm font-medium">Phone Number</label>
+                <input type="text" placeholder="Phone Number"
+                    class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 focus:ring focus:ring-blue-200 outline-none">
+            </div>
+
+            <div>
+                <label class="text-sm font-medium">Manager</label>
+                <select
+                    class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 focus:ring focus:ring-blue-200 outline-none">
+                    <option>Inactive</option>
+                    <option>Active</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-sm font-medium">Branch Manager</label>
+                <select
+                    class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 focus:ring focus:ring-blue-200 outline-none">
+                    <option>Select a manager from existing users</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="text-sm font-medium">Status</label>
+                <select
+                    class="w-full mt-1 px-3 py-2 border rounded-md bg-gray-50 focus:ring focus:ring-blue-200 outline-none">
+                    <option>Active</option>
+                    <option>Inactive</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end gap-3 mt-8">
+            <button onclick="closeBranchModal()"
+                class="px-5 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition">
+                Cancel
+            </button>
+
+            <button
+                class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition">
+                Save Branch
+            </button>
+        </div>
+
+    </div>
+</div>
+
+    </div>
+    <!-- Modal Background -->
+
+
+  <script>
+    function openBranchModal() {
+        const modal = document.getElementById("branchModal");
+        const box = document.getElementById("branchModalBox");
+
+        modal.classList.remove("hidden");
+
+        setTimeout(() => {
+            box.classList.remove("scale-95", "opacity-0");
+            box.classList.add("scale-100", "opacity-100");
+        }, 10);
+    }
+
+    function closeBranchModal() {
+        const modal = document.getElementById("branchModal");
+        const box = document.getElementById("branchModalBox");
+
+        box.classList.add("scale-95", "opacity-0");
+
+        setTimeout(() => {
+            modal.classList.add("hidden");
+        }, 200);
+    }
+</script>
+
+    <!-- SIDEBAR SCRIPT -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("-translate-x-full");
+            document.getElementById("overlay").classList.toggle("hidden");
+        }
+    </script>
+
+</body>
+
+</html>

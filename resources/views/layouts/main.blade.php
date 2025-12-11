@@ -1,0 +1,56 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title' , 'Pharmacy Management')</title>
+    @include('includes.head')
+</head>
+
+<body class="bg-gray-100">
+
+    @include('includes.sidebar')
+
+    <!-- DARK OVERLAY (Mobile only) -->
+    <div id="overlay" class="fixed inset-0 bg-black/40 hidden md:hidden z-40" onclick="toggleSidebar()"></div>
+    <!-- MAIN CONTENT AREA -->
+    <div class="flex-1 md:pl-64">
+        @include('includes.header')
+        @yield('content')
+    </div>
+    <!-- Modal Background -->
+    @include('includes.footer')
+
+    <!-- Import Js Files -->
+    @include('includes.script')
+
+    @stack('scripts')
+    <!-- Floating WhatsApp Button-->
+    <style>
+        @keyframes pulsing {
+            to {
+                box-shadow: 0 0 0 30px rgba(66, 219, 135, 0);
+            }
+        }
+    </style>
+    <div style="position: fixed; bottom: 30px; right: 30px; width: 100px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 1000;">
+        <a target="_blank" href="https://wa.me/917845667204" style="text-decoration: none;">
+            <div style=" background-color: #42db87; color: #fff; width: 60px; height: 60px; font-size: 30px; border-radius: 50%; text-align: center; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 0 #42db87; animation: pulsing 1.25s infinite cubic-bezier(0.66, 0, 0, 1); transition: all 300ms ease-in-out;">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+        </a>
+        <p style="margin-top: 8px; color: #ffff; font-size: 13px;">Talk to us?</p>
+    </div>
+
+    <!-- SIDEBAR SCRIPT -->
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("-translate-x-full");
+            document.getElementById("overlay").classList.toggle("hidden");
+        }
+    </script>
+
+</body>
+
+</html>

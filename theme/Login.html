@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Pharmacy Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body class="bg-[#eef2f6]">
+
+    <div class="min-h-screen flex items-center justify-center p-4">
+
+        <!-- MAIN WRAPPER -->
+        <div class="bg-white shadow-xl rounded-xl w-full max-w-5xl
+                    flex flex-col md:flex-row overflow-hidden
+                    min-h-[520px] md:h-[550px]">
+
+            <!-- LEFT SECTION -->
+            <div class="bg-[#eaf3ff] flex-1 flex flex-col items-center justify-center p-6 text-center">
+
+                <img src="/assets/images/Screenshot 2025-12-09 131023.png"
+                     class="w-60 sm:w-72 md:w-full max-h-[350px] object-contain mb-4" />
+
+                <h1 class="text-2xl font-bold text-gray-800">Welcome to Pharmacy.</h1>
+
+                <p class="text-gray-600 mt-2 text-sm leading-relaxed">
+                    Modern and attractive pharmacy management <br>
+                    system login and sign-up page.
+                </p>
+
+            </div>
+
+            <!-- RIGHT FORM SECTION -->
+            <div class="flex-1 p-6 md:p-10 overflow-y-auto">
+
+                <!-- Toggle -->
+                <div class="flex items-center justify-center gap-6 mb-8 font-semibold text-lg">
+                    <span id="loginTab" class="text-gray-800">Login</span>
+
+                    <label class="relative inline-flex cursor-pointer select-none">
+                        <input type="checkbox" id="formToggle" class="sr-only peer">
+                        <div class="w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-blue-600 transition"></div>
+                        <div class="absolute left-1 top-1 w-4 h-4 bg-white rounded-full shadow 
+                                    transition peer-checked:translate-x-6"></div>
+                    </label>
+
+                    <span id="signupTab" class="text-gray-400">Sign Up</span>
+                </div>
+
+                <!-- FORMS WRAPPER -->
+                <div class="relative space-y-6">
+
+                    <!-- LOGIN FORM -->
+                    <div id="loginForm" class="space-y-6">
+
+                        <div>
+                            <label class="text-sm font-medium">Email</label>
+                            <input class="w-full border rounded-xl px-3 py-2 mt-1 
+                                         focus:ring focus:ring-blue-200" />
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Password</label>
+                            <div class="relative">
+                                <input type="password"
+                                       class="w-full border rounded-xl px-3 py-2 mt-1 focus:ring focus:ring-blue-200" />
+                                <i class="fa fa-eye absolute right-3 top-3.5 text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <label class="flex items-center gap-2 text-sm">
+                            <input type="checkbox" /> Remember me
+                        </label>
+
+                        <button class="w-full py-2 bg-gradient-to-r from-blue-600 to-blue-700 
+                                       text-white rounded-full shadow-md hover:opacity-90">
+                            Login
+                        </button>
+
+                        <p class="text-center text-sm text-blue-600 cursor-pointer">Forgot Password?</p>
+                    </div>
+
+                    <!-- SIGNUP FORM -->
+                    <div id="signupForm" class="space-y-6 hidden">
+
+                        <div>
+                            <label class="text-sm font-medium">Pharmacy Name</label>
+                            <input class="w-full border rounded-xl px-3 py-2 mt-1 
+                                         focus:ring focus:ring-blue-200" />
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Email</label>
+                            <input class="w-full border rounded-xl px-3 py-2 mt-1 
+                                         focus:ring focus:ring-blue-200" />
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Password</label>
+                            <div class="relative">
+                                <input type="password"
+                                       class="w-full border rounded-xl px-3 py-2 mt-1 focus:ring focus:ring-blue-200" />
+                                <i class="fa fa-eye absolute right-3 top-3.5 text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="text-sm font-medium">Confirm Password</label>
+                            <div class="relative">
+                                <input type="password"
+                                       class="w-full border rounded-xl px-3 py-2 mt-1 focus:ring focus:ring-blue-200" />
+                                <i class="fa fa-eye absolute right-3 top-3.5 text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <button class="w-full py-2 bg-gradient-to-r from-blue-600 to-blue-700 
+                                       text-white rounded-full shadow-md hover:opacity-90">
+                            Sign Up
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+        const toggle = document.getElementById("formToggle");
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+        const loginTab = document.getElementById("loginTab");
+        const signupTab = document.getElementById("signupTab");
+
+        toggle.addEventListener("change", () => {
+            if (toggle.checked) {
+                loginForm.classList.add("hidden");
+                signupForm.classList.remove("hidden");
+
+                loginTab.classList.add("text-gray-400");
+                signupTab.classList.add("text-gray-800");
+                signupTab.classList.remove("text-gray-400");
+
+            } else {
+                signupForm.classList.add("hidden");
+                loginForm.classList.remove("hidden");
+
+                signupTab.classList.add("text-gray-400");
+                signupTab.classList.remove("text-gray-800");
+
+                loginTab.classList.remove("text-gray-400");
+                loginTab.classList.add("text-gray-800");
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+

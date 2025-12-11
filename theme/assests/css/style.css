@@ -1,0 +1,26 @@
+:root {
+  --primary: #2563eb;
+  --primary-light: #e8f0ff;
+  --sidebar-bg: #ffffff;
+  --sidebar-hover: #e9f1ff;
+  --text-dark: #1f2937;
+  --text-light: #6b7280;
+  --border: #e5e7eb;
+  --background: #f8fafc;
+  --card-bg: #ffffff;
+}
+        @keyframes scaleFade {
+            from {
+                opacity: 0;
+                transform: scale(.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .animate-scaleFade {
+            animation: scaleFade 180ms ease-out;
+        }
