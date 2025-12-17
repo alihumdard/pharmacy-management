@@ -2,7 +2,13 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\PurchaseItemController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,7 +17,7 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('register', [AuthController::class, 'register']);
-Route::match(['get','post'],'logout', [AuthController::class, 'logout'])->name('logout');
+Route::match(['get', 'post'], 'logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 Route::get('verify-otp', [ForgotPasswordController::class, 'showOtpForm'])->name('password.otp.form');
@@ -29,9 +35,17 @@ Route::middleware('auth')->group(function () {
         Route::patch('/users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
     });
 });
-
-
-
+Route::resource('suppliers', SupplierController::class)->except(['create', 'show', 'edit']);
+Route::get('/suppliers/{supplier}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
+Route::get('/api/suppliers', [SupplierController::class, 'getSuppliers'])->name('suppliers.fetch');
+Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+Route::resource('customers', CustomerController::class)->except(['create', 'show']);
+Route::get('/api/customers/fetch', [CustomerController::class, 'getCustomers'])->name('customers.fetch');
+Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
+Route::post('/medicines/store', [MedicineController::class, 'store'])->name('medicines.store');
+Route::put('/medicines/{id}', [MedicineController::class, 'update'])->name('medicines.update');
+Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -45,9 +59,7 @@ Route::view('/blank', 'pages.blank')->name('blank.page');
 
 Route::view('/branch-management', 'pages.branch-management')->name('branch.management');
 
-Route::view('/customers', 'pages.customers')->name('customers');
-
-Route::view('/inventory', 'pages.inventory')->name('inventory');
+// Route::view('/inventory', 'pages.inventory')->name('inventory');
 
 Route::view('/medicine-database', 'pages.medicine-database')->name('medicine.database');
 
@@ -62,5 +74,3 @@ Route::view('/roles-permissions', 'pages.rules-permission')->name('roles.permiss
 Route::view('/sales', 'pages.sales')->name('sales');
 
 Route::view('/settings', 'pages.settings')->name('settings');
-
-Route::view('/suppliers', 'pages.supplier')->name('suppliers');

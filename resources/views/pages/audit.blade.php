@@ -1,87 +1,110 @@
 @extends('layouts.main')
-@section('title', 'Dashboard')
+@section('title', 'System Audit Log')
 
 @section('content')
+<main class="pt-20 p-4 md:p-8 ">
 
-<!-- MAIN CONTENT AREA -->
-<div class="flex-1 md:pl-64">
+    <div class="max-w-full mx-auto">
+        
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-6 border-b border-gray-200 pb-12 pt-3">System Activity Audit</h1>
 
-    <!-- NAVBAR (ALWAYS FIXED TOP) -->
-    <header class="fixed top-0 left-0 right-0 md:left-64 bg-white shadow p-4
-                       flex justify-between items-center z-40">
+        <div class="bg-white shadow-2xl rounded-2xl border border-gray-100 p-4 md:p-6">
 
-        <!-- Mobile Button -->
-        <button class="md:hidden text-2xl" onclick="toggleSidebar()">
-            <i class="fa-solid fa-bars"></i>
-        </button>
+            <h3 class="text-xl font-bold text-gray-800 mb-6 border-b pb-3">Activity Tracking & History</h3>
 
-        <!-- Title -->
-        <h2 class="text-xl font-bold text-black">Audit Log</h2>
-
-        <!-- Right Icons -->
-        <div class="flex items-center gap-6 text-black text-xl">
-            <div class="relative cursor-pointer">
-                <i class="fa-regular fa-bell"></i>
-                <span class="absolute -top-1 -right-1 h-2 w-2 bg-red-600 rounded-full"></span>
-            </div>
-            <i class="fa-regular fa-circle-question cursor-pointer"></i>
-            <i class="fa-solid fa-right-from-bracket cursor-pointer"></i>
-        </div>
-
-    </header>
-
-    <!-- CONTENT ALWAYS STARTS JUST BELOW NAVBAR -->
-    <main class="pt-20 p-4">
-
-        <div class="bg-white shadow rounded-lg p-5 h-[533px]">
-
-            <!-- Filters -->
-            <div class="flex flex-col md:flex-row md:justify-between gap-4 mb-4">
-                <div
-                    class="flex items-center bg-gray-100 px-4 py-2 rounded-lg border border-gray-300 w-full md:w-1/3">
-                    <i class="fa-solid fa-search"></i>
-                    <input type="text" placeholder="Search" class="bg-transparent ml-2 w-full outline-none">
+            <div class="flex flex-col md:flex-row md:justify-between gap-4 mb-6">
+                
+                <div class="relative w-full md:w-1/3">
+                    <i class="fa-solid fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" placeholder="Search by user, action, or details..." 
+                        class="w-full pl-10 pr-3 py-2.5 bg-gray-100 border border-gray-300 rounded-xl outline-none text-sm text-gray-700 focus:ring-2 focus:ring-blue-400 transition">
                 </div>
 
-                <div class="flex items-center gap-3">
-
-                    <input type="date" class="px-4 py-2 border border-gray-300 rounded-lg bg-gray-50">
+                <div class="flex flex-wrap items-center gap-3">
+                    
+                     <select class="px-4 py-2.5 border border-gray-300 rounded-xl bg-gray-50 text-gray-700 text-sm shadow-sm focus:border-blue-500">
+                        <option>Filter by Action Type</option>
+                        <option>Update</option>
+                        <option>Create</option>
+                        <option>Delete</option>
+                    </select>
+                    
+                    <input type="date" class="px-4 py-2.5 border border-gray-300 rounded-xl bg-white text-gray-700 text-sm shadow-sm focus:border-blue-500">
                 </div>
             </div>
 
-            <!-- Table -->
-            <div class="overflow-x-auto">
-                <table class="min-w-full border rounded">
-                    <thead class="bg-blue-100">
+            <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-lg">
+                <table class="w-full border-collapse text-sm">
+                    
+                    <thead class="bg-blue-600 text-white shadow-md">
                         <tr>
-                            <th class="px-4 py-2 text-left">Timestamp</th>
-                            <th class="px-4 py-2 text-left">User</th>
-                            <th class="px-4 py-2 text-left">Action</th>
-                            <th class="px-4 py-2 text-left">Module</th>
-                            <th class="px-4 py-2 text-left">Details</th>
+                            <th class="py-3 px-5 text-left font-bold uppercase tracking-wider w-[15%]">Timestamp</th>
+                            <th class="py-3 px-5 text-left font-bold uppercase tracking-wider w-[10%]">User</th>
+                            <th class="py-3 px-5 text-left font-bold uppercase tracking-wider w-[10%]">Action</th>
+                            <th class="py-3 px-5 text-left font-bold uppercase tracking-wider w-[10%]">Module</th>
+                            <th class="py-3 px-5 text-left font-bold uppercase tracking-wider w-[55%]">Details</th>
                         </tr>
                     </thead>
 
-                    <tbody>
-                        <tr class="border-t">
-                            <td class="px-4 py-2">2023-05-20 10:30 AM</td>
-                            <td class="px-4 py-2">Admin</td>
-                            <td class="px-4 py-2">Updated Stock</td>
-                            <td class="px-4 py-2">Inventory</td>
-                            <td class="px-4 py-2">Updated stock for Panadol Extra from 10 to 50</td>
+                    <tbody class="divide-y divide-gray-200">
+                        
+                        {{-- Row 1: Update (Example Data) --}}
+                        <tr class="hover:bg-gray-50 transition">
+                            <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">2025-12-12 10:30 PM</td>
+                            <td class="px-5 py-3 font-semibold text-blue-700">Admin</td>
+                            <td class="px-5 py-3">
+                                <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    Update
+                                </span>
+                            </td>
+                            <td class="px-5 py-3 text-gray-600">Inventory</td>
+                            <td class="px-5 py-3 text-gray-800">Updated stock for **Panadol Extra** from 10 to 50 boxes.</td>
                         </tr>
-                    </tbody>
+                        
+                        {{-- Row 2: Create (Example Data) --}}
+                         <tr class="hover:bg-gray-50 transition">
+                            <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">2025-12-12 09:15 PM</td>
+                            <td class="px-5 py-3 font-semibold text-blue-700">Cashier Jane</td>
+                            <td class="px-5 py-3">
+                                <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    Create
+                                </span>
+                            </td>
+                            <td class="px-5 py-3 text-gray-600">Sales/POS</td>
+                            <td class="px-5 py-3 text-gray-800">Processed new sale **#S10018373** (PKR 1,415.70) via Cash.</td>
+                        </tr>
 
+                         {{-- Row 3: Delete (Example Data) --}}
+                         <tr class="hover:bg-gray-50 transition">
+                            <td class="px-5 py-3 font-medium text-gray-800 whitespace-nowrap">2025-12-11 04:00 PM</td>
+                            <td class="px-5 py-3 font-semibold text-blue-700">Manager Sam</td>
+                            <td class="px-5 py-3">
+                                <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">
+                                    Delete
+                                </span>
+                            </td>
+                            <td class="px-5 py-3 text-gray-600">Customers</td>
+                            <td class="px-5 py-3 text-gray-800">Deleted customer record: **John Doe** (Phone: 0300XXXXXX).</td>
+                        </tr>
+
+                    </tbody>
                 </table>
+            </div>
+            
+            {{-- Optional: Pagination (Placeholder for completeness) --}}
+            <div class="mt-6 flex justify-between items-center text-sm text-gray-600">
+                <span>Showing 1 to 10 of 200 results</span>
+                <div class="flex gap-2">
+                    <button class="px-3 py-1 border rounded-lg hover:bg-gray-100">&larr; Previous</button>
+                    <button class="px-3 py-1 border rounded-lg hover:bg-gray-100">Next &rarr;</button>
+                </div>
             </div>
 
         </div>
 
     </main>
-</div>
 @endsection
 
 @push('scripts')
-
-
+{{-- Note: No specific script changes needed --}}
 @endpush

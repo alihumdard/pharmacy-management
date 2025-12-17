@@ -1,63 +1,79 @@
 @extends('layouts.main')
-@section('title', 'Dashboard')
+@section('title', 'Welcome Dashboard')
 
 @section('content')
-<!-- PAGE CONTENT -->
-<main class="overflow-y-auto p-2 bg-gray-100 mt-16">
-    <div class="bg-gray-50 flex items-center justify-center p-4 sm:p-6">
+<main class="overflow-y-auto p-4 md:p-10">
 
-        <div class="w-full max-w-5xl h-[500px]">
+    <div class="flex items-center justify-center">
 
-            <!-- Title -->
-            <h1 class="text-2xl sm:text-4xl font-bold text-gray-800 mb-6 sm:mb-10 text-center sm:text-left">
-                Pharmacy Management System
-            </h1>
+        <div class="w-full max-w-6xl">
 
-            <!-- GRID -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 sm:gap-6">
+            <div class="text-center mb-10 md:mb-16">
+                <h1 class="text-5xl font-extrabold text-gray-900 tracking-tighter leading-tight">
+                    PHARMACY MANAGEMENT
+                </h1>
+                <p class="text-xl text-gray-600 mt-4 font-light">
+                    Your central hub for efficient daily operations.
+                </p>
+            </div>
 
-                <!-- Card 1 -->
-                <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-                    <i class="fa-solid fa-pills text-4xl text-green-800"></i>
-                    <span class="text-lg font-semibold text-gray-700">Medicines</span>
-                </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
-                <!-- Card 2 -->
-                <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-                    <i class="fa-solid fa-store text-4xl text-green-800"></i>
-                    <span class="text-lg font-semibold text-gray-700">Sales</span>
-                </div>
+                {{-- Define modules with routes and colors --}}
+                @php
+                    $modules = [
+                        ['name' => 'Medicine Database', 'icon' => 'fa-pills', 'color' => 'emerald', 'route' => 'medicine.database', 'desc' => 'Manage inventory, suppliers, batches, and stock levels.'],
+                        ['name' => 'Point of Sale (POS)', 'icon' => 'fa-cash-register', 'color' => 'indigo', 'route' => 'sales', 'desc' => 'Process rapid transactions and view real-time sales records.'],
+                        ['name' => 'Customer Management', 'icon' => 'fa-users', 'color' => 'cyan', 'route' => 'customers.index', 'desc' => 'Maintain patient records and manage outstanding credit accounts.'],
+                        ['name' => 'Purchases & Receiving', 'icon' => 'fa-truck-ramp-box', 'color' => 'orange', 'route' => 'purchases', 'desc' => 'Handle ordering, stock receiving, and supplier management.'],
+                        ['name' => 'Analytics & Reports', 'icon' => 'fa-chart-line', 'color' => 'fuchsia', 'route' => 'reports', 'desc' => 'Access performance metrics, sales trends, and profitability analysis.'],
+                        ['name' => 'System Settings', 'icon' => 'fa-gear', 'color' => 'gray', 'route' => 'settings', 'desc' => 'Configure users, permissions, branches, and system parameters.'],
+                    ];
+                @endphp
+                
+                @foreach ($modules as $module)
+                    @php
+                        // Dynamic styling variables
+                        $colorClass = $module['color'];
+                        $iconColor = "text-{$colorClass}-600";
+                        $bgColorHover = "bg-{$colorClass}-50";
+                        $titleColorHover = "text-{$colorClass}-900";
+                    @endphp
 
-                <!-- Card 3 -->
-                <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-                    <i class="fa-solid fa-user text-4xl text-green-800"></i>
-                    <span class="text-lg font-semibold text-gray-700">Customers</span>
-                </div>
+                    <a href="{{ route($module['route']) ?? '#' }}"
+                        class="group block p-7 bg-white rounded-xl shadow-2xl border border-gray-100 
+                               hover:shadow-3xl hover:border-transparent transition-all duration-300 relative overflow-hidden 
+                               transform hover:-translate-y-2 hover:z-10" 
+                               style="box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
 
-                <!-- Card 4 -->
-                <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-                    <i class="fa-solid fa-chart-pie text-4xl text-green-800"></i>
-                    <span class="text-lg font-semibold text-gray-700">Purchases</span>
-                </div>
+                        {{-- Background Accent on Hover --}}
+                        <div class="absolute inset-0 {{ $bgColorHover }} opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                <!-- Card 5 -->
-                <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-                    <i class="fa-solid fa-chart-line text-4xl text-green-800"></i>
-                    <span class="text-lg font-semibold text-gray-700">Reports</span>
-                </div>
+                        <div class="relative z-10 flex flex-col items-start gap-4">
+                            
+                            {{-- Icon --}}
+                            <div class="p-3 rounded-xl {{ $iconColor }} bg-gray-50 group-hover:bg-white shadow-inner transition-colors duration-300">
+                                <i class="fa-solid {{ $module['icon'] }} text-3xl md:text-4xl"></i>
+                            </div>
 
-                <!-- Card 6 -->
-                <div class="flex items-center gap-4 p-6 bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer">
-                    <i class="fa-solid fa-gear text-4xl text-green-800"></i>
-                    <span class="text-lg font-semibold text-gray-700">Settings</span>
-                </div>
+                            {{-- Title --}}
+                            <span class="text-xl md:text-2xl font-extrabold text-gray-900 {{ $titleColorHover }} transition duration-300">
+                                {{ $module['name'] }}
+                            </span>
+
+                            {{-- Description --}}
+                            <p class="text-sm text-gray-500 group-hover:text-gray-600 transition">
+                                {{ $module['desc'] }}
+                            </p>
+                            
+                            {{-- Arrow Indicator --}}
+                             <i class="fa-solid fa-arrow-right text-base mt-2 {{ $iconColor }} opacity-70 group-hover:opacity-100 transform group-hover:translate-x-1 transition duration-300"></i>
+                        </div>
+                    </a>
+                @endforeach
+
             </div>
         </div>
     </div>
 </main>
 @endsection
-
-@push('scripts')
-
-
-@endpush

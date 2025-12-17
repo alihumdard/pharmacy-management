@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\Auth; // Ensure the Auth facade is available globally, though Auth() helper often works without it.
+
 function table_date($datetime)
 {
     try {
@@ -63,7 +66,23 @@ function user_role_no($role_no)
 
 function view_permission($page_name)
 {
-    $user_role = Auth()->User()->role;
+    // === FIX IMPLEMENTED HERE ===
+    $user = Auth()->User();
+
+    // 1. Check if the user is authenticated (not null)
+    if (!$user) {
+        return false;
+    }
+    
+    // 2. Safely access the role property on the authenticated user object
+    $user_role = $user->role; 
+    
+    // 3. Ensure role property is not null/empty before switching
+    if (empty($user_role)) {
+        return false;
+    }
+    // ============================
+
     switch ($user_role) {
         case 'Admin':
             switch ($page_name) {
