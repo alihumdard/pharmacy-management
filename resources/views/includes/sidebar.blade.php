@@ -85,8 +85,8 @@
         </a>
 
         {{-- Purchases --}}
-        <a href="{{ route('purchases') }}"
-           class="{{ $baseClass }} {{ request()->routeIs('purchases') ? $activeClass : '' }}">
+        <a href="{{ route('po.index') }}"
+           class="{{ $baseClass }} {{ request()->routeIs('po.index') ? $activeClass : '' }}">
             <i class="fa-solid fa-file-invoice w-4 h-4 text-lg mb-3 mr-2"></i>
             Purchases
         </a>

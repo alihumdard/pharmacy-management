@@ -8,6 +8,7 @@ use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseItemController;
+use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,9 @@ Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.
 Route::post('/medicines/store', [MedicineController::class, 'store'])->name('medicines.store');
 Route::put('/medicines/{id}', [MedicineController::class, 'update'])->name('medicines.update');
 Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
+Route::get('/purchase-orders', [PurchaseOrderController::class, 'index'])->name('po.index');
+Route::post('/purchase-orders/store', [PurchaseOrderController::class, 'store'])->name('po.store');
+Route::delete('/purchase-orders/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.destroy');
 
 /*
 |--------------------------------------------------------------------------
@@ -59,13 +63,12 @@ Route::view('/blank', 'pages.blank')->name('blank.page');
 
 Route::view('/branch-management', 'pages.branch-management')->name('branch.management');
 
-// Route::view('/inventory', 'pages.inventory')->name('inventory');
 
 Route::view('/medicine-database', 'pages.medicine-database')->name('medicine.database');
 
 Route::view('/pos', 'pages.pos')->name('pos');
 
-Route::view('/purchases', 'pages.purchases')->name('purchases');
+// Route::view('/purchases', 'pages.purchases')->name('purchases');
 
 Route::view('/reports', 'pages.reports')->name('reports');
 
