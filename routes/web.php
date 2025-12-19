@@ -48,6 +48,9 @@ Route::post('/medicines/store', [MedicineController::class, 'store'])->name('med
 Route::put('/medicines/{id}', [MedicineController::class, 'update'])->name('medicines.update');
 Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 Route::get('/purchase-orders', [PurchaseOrderController::class, 'index'])->name('po.index');
+// Ye routes lazmi honay chahiyen
+Route::get('/purchase-orders/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po.edit');
+Route::put('/purchase-orders/{id}', [PurchaseOrderController::class, 'update'])->name('po.update');
 Route::post('/purchase-orders/store', [PurchaseOrderController::class, 'store'])->name('po.store');
 Route::delete('/purchase-orders/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.destroy');
 
