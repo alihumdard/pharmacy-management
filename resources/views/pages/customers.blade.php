@@ -75,7 +75,7 @@
                                     </td>
                                     <td class="py-4 px-5 text-center">
                                         <div class="flex items-center justify-center gap-4 text-gray-500 text-lg">
-                                            <i class="fa-solid fa-file-invoice cursor-pointer hover:text-blue-600" title="View History"></i>
+                                            {{-- <i class="fa-solid fa-file-invoice cursor-pointer hover:text-blue-600" title="View History"></i> --}}
                                             <i class="fa-solid fa-pen-to-square cursor-pointer hover:text-orange-600" title="Edit Customer" onclick="editCustomer({{ $customer->id }})"></i>
                                             <i class="fa-solid fa-trash cursor-pointer hover:text-red-600" title="Delete Customer" onclick="deleteCustomer({{ $customer->id }}, '{{ addslashes($customer->customer_name) }}')"></i>
                                         </div>
@@ -341,7 +341,6 @@
         }, 300);
     }
 
-    // Main function to fetch and update table data
     function fetchData(page = 1) {
         
         currentPage = page;

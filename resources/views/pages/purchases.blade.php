@@ -48,9 +48,17 @@
                                         <div class="font-bold text-gray-900 uppercase tracking-tight">{{ $order->supplier_name }}</div>
                                         <div class="mt-2 flex flex-wrap gap-1">
                                             @foreach($order->items as $item)
-                                                <div class="flex items-center gap-2 mt-1">
-                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100 font-medium">{{ $item->product_name }}</span>
-                                                    <span class="text-[10px] text-gray-500">({{ $item->variants->count() }} vars)</span>
+                                                <div class="flex flex-col gap-1 mt-1">
+                                                    <span class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100 font-bold w-fit">
+                                                        {{ $item->product_name }}
+                                                    </span>
+                                                    <div class="flex flex-wrap gap-1">
+                                                        @foreach($item->variants as $v)
+                                                            <span class="text-[9px] bg-gray-100 text-gray-500 px-1.5 py-0.5 rounded border border-gray-200">
+                                                                {{ $v->sku }}
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -59,14 +67,7 @@
                                         PKR {{ number_format($order->total_amount, 2) }}
                                     </td>
                                     <td class="py-4 px-5 text-center align-top">
-                                        @php
-                                            $statusClasses = [
-                                                'Completed' => 'bg-green-50 text-green-700 border-green-200',
-                                                'Pending' => 'bg-yellow-50 text-yellow-700 border-yellow-200',
-                                                'Draft' => 'bg-gray-50 text-gray-700 border-gray-200'
-                                            ];
-                                        @endphp
-                                        <span class="{{ $statusClasses[$order->status] ?? $statusClasses['Draft'] }} border px-3 py-1 rounded-full text-[10px] font-extrabold uppercase">
+                                        <span class="bg-gray-50 border border-gray-200 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase">
                                             {{ $order->status }}
                                         </span>
                                     </td>
@@ -78,9 +79,7 @@
                                     </td>
                                 </tr>
                             @empty
-                                <tr>
-                                    <td colspan="5" class="p-10 text-center text-gray-400 italic">No purchase orders found.</td>
-                                </tr>
+                                <tr><td colspan="5" class="p-10 text-center">No purchase orders found.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -104,7 +103,7 @@
                                 <select id="po_supplier" class="w-full p-2.5 border rounded-lg mt-1 bg-white outline-none focus:ring-2 focus:ring-blue-400">
                                     <option value="">Select Supplier</option>
                                     @foreach($suppliers as $supplier)
-                                        <option value="{{ $supplier->name ?? $supplier->supplier_name }}">{{ $supplier->name ?? $supplier->supplier_name }}</option>
+                                        <option value="{{ $supplier->supplier_name }}">{{ $supplier->supplier_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -133,8 +132,8 @@
                                 <table class="w-full text-sm">
                                     <thead class="bg-gray-100 text-gray-600 border-b">
                                         <tr class="text-left font-bold">
-                                            <th class="p-3">Product Name</th>
-                                            <th class="p-3">Variants</th>
+                                            <th class="p-3">Product Name & Variants</th>
+                                            <th class="p-3">Details</th>
                                             <th class="p-3 text-right">Subtotal</th>
                                             <th class="p-3 text-center">Action</th>
                                         </tr>
@@ -190,7 +189,7 @@
                         <table class="w-full text-xs bg-white border border-gray-100 rounded-lg overflow-hidden shadow-sm">
                             <thead class="bg-gray-50 text-gray-500 uppercase font-bold">
                                 <tr>
-                                    <th class="p-2 text-left">SKU</th>
+                                    <th class="p-2 text-left">SKU Name</th>
                                     <th class="p-2 text-left">Batch</th>
                                     <th class="p-2 text-right">Price</th>
                                     <th class="p-2 text-center">Qty</th>
@@ -220,7 +219,7 @@
                 </div>
                 <div class="p-4 border-t flex justify-end gap-2 bg-gray-50 rounded-b-2xl">
                     <button onclick="closeVariantModal()" class="px-4 py-2 bg-gray-200 rounded-lg font-bold">Cancel</button>
-                    <button id="saveVariantBtn" class="px-6 py-2 bg-green-600 text-white rounded-lg font-bold shadow-md">Add to List</button>
+                    <button id="saveVariantBtn" class="px-6 py-2 bg-green-600 text-white rounded-lg font-bold shadow-md">Add Variant</button>
                 </div>
             </div>
         </div>
@@ -257,10 +256,25 @@
             ['v_sku', 'v_batch', 'v_expiry', 'v_tp', 'v_stock'].forEach(id => document.getElementById(id).value = (id === 'v_tp' ? '0' : (id === 'v_stock' ? '1' : '')));
         });
 
+        // UPDATED: Variants Table inside Product Modal
         function updateVariantTable() {
             const tbody = document.getElementById('variantsTbody');
-            if (currentTempVariants.length === 0) { tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center">No variants added</td></tr>'; return; }
-            tbody.innerHTML = currentTempVariants.map((v, i) => `<tr class="bg-white"><td class="p-2">${v.sku}</td><td class="p-2">${v.batch || '-'}</td><td class="p-2 text-right">${v.tp}</td><td class="p-2 text-center">${v.stock}</td><td class="p-2 text-center text-red-500 cursor-pointer" onclick="currentTempVariants.splice(${i},1);updateVariantTable();"><i class="fa-solid fa-trash"></i></td></tr>`).join('');
+            if (currentTempVariants.length === 0) { 
+                tbody.innerHTML = '<tr><td colspan="5" class="p-4 text-center text-gray-400 italic">No variants added yet.</td></tr>'; 
+                return; 
+            }
+            tbody.innerHTML = currentTempVariants.map((v, i) => `
+                <tr class="bg-white hover:bg-gray-50 transition">
+                    <td class="p-2 font-bold text-blue-600 uppercase tracking-tight">${v.sku}</td>
+                    <td class="p-2 text-gray-500">${v.batch || '-'}</td>
+                    <td class="p-2 text-right font-semibold">PKR ${v.tp.toLocaleString()}</td>
+                    <td class="p-2 text-center"><span class="bg-gray-100 px-2 py-0.5 rounded font-bold">${v.stock}</span></td>
+                    <td class="p-2 text-center">
+                        <button onclick="currentTempVariants.splice(${i},1);updateVariantTable();" class="text-red-500 hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </td>
+                </tr>`).join('');
         }
 
         window.addProductToPO = () => {
@@ -275,16 +289,43 @@
             ['p_name', 'p_manufacturer'].forEach(id => document.getElementById(id).value = '');
         };
 
+        // UPDATED: Main PO Modal Product Table (Counting replaced by SKU Names)
         function updatePOTable() {
             const tbody = document.getElementById('poProductsTbody');
-            if (poItemsList.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center italic text-gray-400">No products added yet.</td></tr>'; return; }
-            tbody.innerHTML = poItemsList.map((p, i) => `<tr class="border-b"><td class="p-3 font-bold text-gray-700">${p.name}</td><td class="p-3"><span class="bg-blue-100 text-blue-700 px-2 py-1 rounded-lg text-xs font-bold">${p.variants.length} Variants</span></td><td class="p-3 text-right font-bold text-green-700">PKR ${p.total.toLocaleString()}</td><td class="p-3 text-center"><button onclick="poItemsList.splice(${i},1);updatePOTable();" class="text-red-500"><i class="fa-solid fa-trash-can"></i></button></td></tr>`).join('');
+            if (poItemsList.length === 0) { 
+                tbody.innerHTML = '<tr><td colspan="4" class="p-6 text-center italic text-gray-400">No products added yet.</td></tr>'; 
+                return; 
+            }
+            tbody.innerHTML = poItemsList.map((p, i) => {
+                // Generate SKU Name Badges
+                const skuBadges = p.variants.map(v => 
+                    `<span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded border border-blue-100 mr-1 mb-1 inline-block font-medium uppercase tracking-tight">
+                        ${v.sku}
+                    </span>`
+                ).join('');
+
+                return `
+                    <tr class="border-b bg-white hover:bg-gray-50 transition">
+                        <td class="p-3">
+                            <div class="font-bold text-gray-800">${p.name}</div>
+                            <div class="mt-1 flex flex-wrap">${skuBadges}</div>
+                        </td>
+                        <td class="p-3">
+                            <span class="text-xs text-gray-500 block italic">${p.manufacturer}</span>
+                            <span class="bg-gray-100 text-gray-600 px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-widest">${p.variants.length} Types</span>
+                        </td>
+                        <td class="p-3 text-right font-bold text-green-700">PKR ${p.total.toLocaleString()}</td>
+                        <td class="p-3 text-center">
+                            <button onclick="poItemsList.splice(${i},1);updatePOTable();" class="text-red-500 hover:text-red-700 transition">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
+                    </tr>`;
+            }).join('');
         }
 
-        // --- FIXED EDIT FUNCTION FOR ALPINE V3 ---
         window.editPO = async (id) => {
             try {
-                // Adjust route if your URL structure is different
                 const response = await fetch(`/purchase-orders/${id}/edit`);
                 if (!response.ok) throw new Error("Could not load PO data");
                 const po = await response.json();
@@ -292,16 +333,14 @@
                 isEditMode = true;
                 editPoId = id;
 
-                // Set form fields
                 document.getElementById('po_supplier').value = po.supplier_name;
                 document.getElementById('po_date').value = po.order_date;
                 document.getElementById('po_status').value = po.status;
 
-                // Load existing items
                 poItemsList = po.items.map(item => ({
                     name: item.product_name,
                     manufacturer: item.manufacturer,
-                    category: 'General', // Defaulting category
+                    category: 'General',
                     variants: item.variants.map(v => ({
                         sku: v.sku,
                         batch: v.batch_no,
@@ -314,14 +353,8 @@
                 }));
 
                 updatePOTable();
-
-                // Dispatch event to Alpine
                 window.dispatchEvent(new CustomEvent('open-po-modal', { detail: { editMode: true } }));
-
-            } catch (e) {
-                console.error(e);
-                alert("Error loading PO: " + e.message);
-            }
+            } catch (e) { console.error(e); alert("Error loading PO: " + e.message); }
         };
 
         window.submitFinalPO = async () => {
@@ -333,13 +366,9 @@
                 total_amount: poItemsList.reduce((sum, p) => sum + p.total, 0),
                 products: poItemsList
             };
-
             if (!payload.supplier || poItemsList.length === 0) return alert('Supplier and Products are mandatory');
-
-            // Switch between store and update route
             const url = isEditMode ? `/purchase-orders/${editPoId}` : "{{ route('po.store') }}";
             const method = isEditMode ? "PUT" : "POST";
-
             try {
                 const response = await fetch(url, {
                     method: method,
@@ -349,10 +378,7 @@
                 const result = await response.json();
                 if (result.success) window.location.reload();
                 else alert(result.message);
-            } catch (e) {
-                alert('Something went wrong. Please check console.');
-                console.error(e);
-            }
+            } catch (e) { alert('Something went wrong.'); console.error(e); }
         };
 
         window.deletePO = async (id) => {
@@ -361,14 +387,12 @@
                 method: 'DELETE',
                 headers: { 'X-CSRF-TOKEN': "{{ csrf_token() }}" }
             });
-            if ((await res.json()).success) window.location.reload();
+            const result = await res.json();
+            if (result.success) window.location.reload();
         };
 
         window.resetForm = () => { 
-            poItemsList = []; 
-            isEditMode = false; 
-            editPoId = null;
-            updatePOTable();
+            poItemsList = []; isEditMode = false; editPoId = null; updatePOTable();
             document.getElementById('po_supplier').value = '';
             document.getElementById('po_date').value = "{{ date('Y-m-d') }}";
         };

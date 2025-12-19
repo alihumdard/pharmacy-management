@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseItemController;
@@ -48,14 +49,17 @@ Route::post('/medicines/store', [MedicineController::class, 'store'])->name('med
 Route::put('/medicines/{id}', [MedicineController::class, 'update'])->name('medicines.update');
 Route::delete('/medicines/{id}', [MedicineController::class, 'destroy'])->name('medicines.destroy');
 Route::get('/purchase-orders', [PurchaseOrderController::class, 'index'])->name('po.index');
-// Ye routes lazmi honay chahiyen
+
 Route::get('/purchase-orders/{id}/edit', [PurchaseOrderController::class, 'edit'])->name('po.edit');
 Route::put('/purchase-orders/{id}', [PurchaseOrderController::class, 'update'])->name('po.update');
 Route::post('/purchase-orders/store', [PurchaseOrderController::class, 'store'])->name('po.store');
 Route::delete('/purchase-orders/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.destroy');
 
+Route::get('/pos', [PosController::class, 'index'])->name('pos');
+Route::get('/pos/search-products', [PosController::class, 'searchProducts'])->name('pos.search');
+Route::post('/pos/checkout', [PosController::class, 'store'])->name('pos.checkout');
+
 /*
-|--------------------------------------------------------------------------
 | Static Page Routes
 |--------------------------------------------------------------------------
 */
@@ -69,7 +73,7 @@ Route::view('/branch-management', 'pages.branch-management')->name('branch.manag
 
 Route::view('/medicine-database', 'pages.medicine-database')->name('medicine.database');
 
-Route::view('/pos', 'pages.pos')->name('pos');
+// Route::view('/pos', 'pages.pos')->name('pos');
 
 // Route::view('/purchases', 'pages.purchases')->name('purchases');
 
