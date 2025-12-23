@@ -22,4 +22,8 @@ class Customer extends Model
     protected $casts = [
         'credit_balance' => 'float',
     ];
+
+    public function sales() {
+    return $this->hasMany(Sale::class)->orderBy('sale_date', 'desc');
+}
 }

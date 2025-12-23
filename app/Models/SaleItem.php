@@ -25,4 +25,10 @@ class SaleItem extends Model
     {
         return $this->belongsTo(MedicineVariant::class, 'medicine_variant_id');
     }
+
+    public function medicineVariant()
+    {
+        // Check karein ke foreign key 'medicine_variant_id' hi hai
+        return $this->belongsTo(MedicineVariant::class, 'medicine_variant_id');
+    }
 }

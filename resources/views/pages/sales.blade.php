@@ -19,28 +19,63 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
 
-                {{-- Define modules with routes and colors --}}
+                {{-- Updated modules array to match web.php route names --}}
                 @php
                     $modules = [
-                        ['name' => 'Medicine Database', 'icon' => 'fa-pills', 'color' => 'emerald', 'route' => 'medicine.database', 'desc' => 'Manage inventory, suppliers, batches, and stock levels.'],
-                        ['name' => 'Point of Sale (POS)', 'icon' => 'fa-cash-register', 'color' => 'indigo', 'route' => 'sales', 'desc' => 'Process rapid transactions and view real-time sales records.'],
-                        ['name' => 'Customer Management', 'icon' => 'fa-users', 'color' => 'cyan', 'route' => 'customers.index', 'desc' => 'Maintain patient records and manage outstanding credit accounts.'],
-                        ['name' => 'Purchases & Receiving', 'icon' => 'fa-truck-ramp-box', 'color' => 'orange', 'route' => 'purchases', 'desc' => 'Handle ordering, stock receiving, and supplier management.'],
-                        ['name' => 'Analytics & Reports', 'icon' => 'fa-chart-line', 'color' => 'fuchsia', 'route' => 'reports', 'desc' => 'Access performance metrics, sales trends, and profitability analysis.'],
-                        ['name' => 'System Settings', 'icon' => 'fa-gear', 'color' => 'gray', 'route' => 'settings', 'desc' => 'Configure users, permissions, branches, and system parameters.'],
+                        [
+                            'name' => 'Medicine Database', 
+                            'icon' => 'fa-pills', 
+                            'color' => 'emerald', 
+                            'route' => 'medicines.index', // Matches Route::get('/medicines')
+                            'desc' => 'Manage inventory, suppliers, batches, and stock levels.'
+                        ],
+                        [
+                            'name' => 'Point of Sale (POS)', 
+                            'icon' => 'fa-cash-register', 
+                            'color' => 'indigo', 
+                            'route' => 'pos', // Matches Route::get('/pos')
+                            'desc' => 'Process rapid transactions and view real-time sales records.'
+                        ],
+                        [
+                            'name' => 'Customer Management', 
+                            'icon' => 'fa-users', 
+                            'color' => 'cyan', 
+                            'route' => 'customers.index', // Matches Route::resource('customers')
+                            'desc' => 'Maintain patient records and manage outstanding credit accounts.'
+                        ],
+                        [
+                            'name' => 'Purchases & Receiving', 
+                            'icon' => 'fa-truck-ramp-box', 
+                            'color' => 'orange', 
+                            'route' => 'po.index', // Matches Route::get('/purchase-orders')
+                            'desc' => 'Handle ordering, stock receiving, and supplier management.'
+                        ],
+                        [
+                            'name' => 'Analytics & Reports', 
+                            'icon' => 'fa-chart-line', 
+                            'color' => 'fuchsia', 
+                            'route' => 'reports', // Matches Route::view('/reports')
+                            'desc' => 'Access performance metrics, sales trends, and profitability analysis.'
+                        ],
+                        [
+                            'name' => 'System Settings', 
+                            'icon' => 'fa-gear', 
+                            'color' => 'gray', 
+                            'route' => 'settings', // Matches Route::view('/settings')
+                            'desc' => 'Configure users, permissions, branches, and system parameters.'
+                        ],
                     ];
                 @endphp
                 
                 @foreach ($modules as $module)
                     @php
-                        // Dynamic styling variables
                         $colorClass = $module['color'];
                         $iconColor = "text-{$colorClass}-600";
                         $bgColorHover = "bg-{$colorClass}-50";
                         $titleColorHover = "text-{$colorClass}-900";
                     @endphp
 
-                    <a href="{{ route($module['route']) ?? '#' }}"
+                    <a href="{{ Route::has($module['route']) ? route($module['route']) : '#' }}"
                         class="group block p-7 bg-white rounded-xl shadow-2xl border border-gray-100 
                                hover:shadow-3xl hover:border-transparent transition-all duration-300 relative overflow-hidden 
                                transform hover:-translate-y-2 hover:z-10" 

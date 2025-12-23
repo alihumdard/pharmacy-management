@@ -10,6 +10,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseItemController;
 use App\Http\Controllers\PurchaseOrderController;
+use App\Http\Controllers\SalesReportController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +29,7 @@ Route::post('verify-otp', [ForgotPasswordController::class, 'verifyOtp'])->name(
 Route::get('reset-password', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
 Route::post('reset-password', [ForgotPasswordController::class, 'reset'])->name('password.update');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('admin')->name('admin.')->group(function () {
@@ -41,9 +43,13 @@ Route::resource('suppliers', SupplierController::class)->except(['create', 'show
 Route::get('/suppliers/{supplier}/edit', [SupplierController::class, 'edit'])->name('suppliers.edit');
 Route::get('/api/suppliers', [SupplierController::class, 'getSuppliers'])->name('suppliers.fetch');
 Route::get('/suppliers', [SupplierController::class, 'index'])->name('suppliers.index');
+Route::get('/suppliers/{supplier}/history', [SupplierController::class, 'getHistory'])->name('suppliers.history');
+Route::post('/suppliers/{supplier}/payment', [SupplierController::class, 'recordPayment'])->name('suppliers.payment');
 Route::resource('customers', CustomerController::class)->except(['create', 'show']);
 Route::get('/api/customers/fetch', [CustomerController::class, 'getCustomers'])->name('customers.fetch');
 Route::get('/customers', [CustomerController::class, 'index'])->name('customers.index');
+Route::get('/customers/{customer}/history', [CustomerController::class, 'getHistory'])->name('customers.history');
+Route::post('/customers/{customer}/payment', [CustomerController::class, 'recordPayment'])->name('customers.payment');
 Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
 Route::post('/medicines/store', [MedicineController::class, 'store'])->name('medicines.store');
 Route::put('/medicines/{id}', [MedicineController::class, 'update'])->name('medicines.update');
@@ -55,9 +61,14 @@ Route::put('/purchase-orders/{id}', [PurchaseOrderController::class, 'update'])-
 Route::post('/purchase-orders/store', [PurchaseOrderController::class, 'store'])->name('po.store');
 Route::delete('/purchase-orders/{id}', [PurchaseOrderController::class, 'destroy'])->name('po.destroy');
 
+Route::get('/settings', [SettingController::class, 'index'])->name('settings');
+Route::post('/settings/general', [SettingController::class, 'updateGeneral'])->name('settings.update.general');
+
 Route::get('/pos', [PosController::class, 'index'])->name('pos');
 Route::get('/pos/search-products', [PosController::class, 'searchProducts'])->name('pos.search');
 Route::post('/pos/checkout', [PosController::class, 'store'])->name('pos.checkout');
+Route::get('/reports/sales', [SalesReportController::class, 'index'])->name('reports.sales');
+Route::get('/reports', [SalesReportController::class, 'index'])->name('reports');
 
 /*
 | Static Page Routes
@@ -77,10 +88,10 @@ Route::view('/medicine-database', 'pages.medicine-database')->name('medicine.dat
 
 // Route::view('/purchases', 'pages.purchases')->name('purchases');
 
-Route::view('/reports', 'pages.reports')->name('reports');
+// Route::view('/reports', 'pages.reports')->name('reports');
 
 Route::view('/roles-permissions', 'pages.rules-permission')->name('roles.permissions');
 
 Route::view('/sales', 'pages.sales')->name('sales');
 
-Route::view('/settings', 'pages.settings')->name('settings');
+// Route::view('/settings', 'pages.settings')->name('settings');
