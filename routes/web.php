@@ -5,8 +5,10 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\MedicineReportController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfitLossReportController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\PurchaseItemController;
 use App\Http\Controllers\PurchaseOrderController;
@@ -69,6 +71,8 @@ Route::get('/pos/search-products', [PosController::class, 'searchProducts'])->na
 Route::post('/pos/checkout', [PosController::class, 'store'])->name('pos.checkout');
 Route::get('/reports/sales', [SalesReportController::class, 'index'])->name('reports.sales');
 Route::get('/reports', [SalesReportController::class, 'index'])->name('reports');
+Route::get('/reports/medicine', [MedicineReportController::class, 'index'])->name('reports.medicine');
+Route::get('/reports/profit-loss', [ProfitLossReportController::class, 'index'])->name('reports.profit_loss');
 
 /*
 | Static Page Routes
@@ -84,14 +88,6 @@ Route::view('/branch-management', 'pages.branch-management')->name('branch.manag
 
 Route::view('/medicine-database', 'pages.medicine-database')->name('medicine.database');
 
-// Route::view('/pos', 'pages.pos')->name('pos');
-
-// Route::view('/purchases', 'pages.purchases')->name('purchases');
-
-// Route::view('/reports', 'pages.reports')->name('reports');
-
 Route::view('/roles-permissions', 'pages.rules-permission')->name('roles.permissions');
 
 Route::view('/sales', 'pages.sales')->name('sales');
-
-// Route::view('/settings', 'pages.settings')->name('settings');

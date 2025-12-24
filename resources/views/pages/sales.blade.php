@@ -2,14 +2,14 @@
 @section('title', 'Welcome Dashboard')
 
 @section('content')
-<main class="overflow-y-auto p-4 md:p-10">
+<main class="overflow-y-auto p-4 md:p-10 mt-14 sm:mt-0">
 
     <div class="flex items-center justify-center">
 
         <div class="w-full max-w-6xl">
 
-            <div class="text-center mb-10 md:mb-16">
-                <h1 class="text-5xl font-extrabold text-gray-900 tracking-tighter leading-tight">
+            <div class=" mb-10 md:mb-16">
+                <h1 class="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tighter leading-tight">
                     PHARMACY MANAGEMENT
                 </h1>
                 <p class="text-xl text-gray-600 mt-4 font-light">
@@ -100,7 +100,7 @@
                             <p class="text-sm text-gray-500 group-hover:text-gray-600 transition">
                                 {{ $module['desc'] }}
                             </p>
-                            
+                     8       
                             {{-- Arrow Indicator --}}
                              <i class="fa-solid fa-arrow-right text-base mt-2 {{ $iconColor }} opacity-70 group-hover:opacity-100 transform group-hover:translate-x-1 transition duration-300"></i>
                         </div>

@@ -4,7 +4,7 @@
 @section('content')
 <main class="overflow-y-auto p-6 md:p-8 pt-16 bg-gray-50 min-h-screen">
     <div class="max-w-[1600px] mx-auto">
-        <h1 class="text-3xl font-bold text-gray-800 mb-2">Pharmacy Overview</h1>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tighter leading-tight">Pharmacy Overview</h1>
         <p class="text-gray-500 mb-8">Real-time performance metrics as of {{ now()->format('d M, Y h:i A') }}</p>
 
         {{-- Stats Grid --}}

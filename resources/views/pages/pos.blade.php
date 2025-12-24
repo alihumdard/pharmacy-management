@@ -10,7 +10,7 @@
             <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 h-[85vh] flex flex-col">
                 <div class="flex flex-col md:flex-row items-center justify-between mb-6 gap-4">
                     <div>
-                        <h2 class="text-2xl font-black text-gray-900 tracking-tighter italic uppercase leading-none">Inventory Items</h2>
+                        <h2 class="text-2xl font-black text-gray-900 tracking-tighter uppercase leading-none">Inventory Items</h2>
                         <p class="text-[10px] text-blue-500 font-bold uppercase tracking-widest mt-1">Direct Selection & Search</p>
                     </div>
                     {{-- Search Bar: No Page Reload --}}
@@ -34,7 +34,7 @@
             {{-- RIGHT SIDE: CART SECTION --}}
             <div class="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 h-[85vh] flex flex-col overflow-hidden">
                 <div class="border-b border-gray-100 pb-4 mb-4">
-                    <h3 class="text-xl font-black text-gray-900 tracking-tighter uppercase italic leading-none">Current Invoice</h3>
+                    <h3 class="text-xl font-black text-gray-900 tracking-tighter uppercase leading-none">Current Invoice</h3>
                     <div class="mt-4 flex items-center gap-3">
                         <select id="customerSelect" class="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl bg-gray-50 text-sm font-bold focus:ring-4 focus:ring-blue-50 outline-none">
                             <option value="walkin">Walk-in Customer</option>

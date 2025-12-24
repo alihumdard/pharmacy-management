@@ -6,7 +6,7 @@
 
     <div class="max-w-7xl mx-auto">
         
-        <h1 class="text-3xl font-extrabold text-gray-900 mb-6 border-b border-gray-200 pb-12 pt-3 uppercase italic tracking-tighter">System Configuration & Master Setup</h1>
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-6 border-b border-gray-200 pb-12 pt-3 uppercase tracking-tighter">System Configuration & Master Setup</h1>
 
         <div class="bg-white rounded-2xl shadow-2xl border border-gray-100 p-4 md:p-6">
 
