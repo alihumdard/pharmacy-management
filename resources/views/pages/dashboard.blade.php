@@ -17,12 +17,12 @@
                     </div>
                     <div class="text-right">
                         <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-0.5">Today's Sales</p>
-                        <h2 class="text-2xl font-extrabold text-gray-900">PKR {{ number_format($todaySales, 0) }}</h2>
+                        <h2 class="text-2xl font-extrabold text-gray-900">PKR {{ number_format($todaySales ?? 0, 0) }}</h2>
                     </div>
                 </div>
-                <p class="text-xs font-semibold {{ $percentageIncrease >= 0 ? 'text-green-600' : 'text-red-600' }} mt-5 pt-3 border-t border-gray-100 flex items-center">
-                    <i class="fa-solid fa-arrow-{{ $percentageIncrease >= 0 ? 'up' : 'down' }} mr-1"></i> 
-                    {{ number_format(abs($percentageIncrease), 1) }}% 
+                <p class="text-xs font-semibold {{ $percentageIncrease ?? 0 >= 0 ? 'text-green-600' : 'text-red-600' }} mt-5 pt-3 border-t border-gray-100 flex items-center">
+                    <i class="fa-solid fa-arrow-{{ $percentageIncrease ?? 0 >= 0 ? 'up' : 'down' }} mr-1"></i> 
+                    {{ number_format(abs($percentageIncrease ?? 0), 1) }}% 
                     <span class="text-gray-400 ml-auto font-normal">vs yesterday</span>
                 </p>
             </div>
@@ -35,7 +35,7 @@
                     </div>
                     <div class="text-right">
                         <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-0.5">Low Stock Items</p>
-                        <h2 class="text-4xl font-extrabold text-gray-900">{{ $lowStockCount }}</h2>
+                        <h2 class="text-4xl font-extrabold text-gray-900">{{ $lowStockCount ?? 0 }}</h2>
                     </div>
                 </div>
                 <a href="{{ route('medicines.index') }}" class="text-xs font-semibold text-red-600 mt-5 pt-3 border-t border-gray-100 flex items-center hover:underline">
@@ -52,7 +52,7 @@
                     </div>
                     <div class="text-right">
                         <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-0.5">Expiring Batches</p>
-                        <h2 class="text-4xl font-extrabold text-gray-900">{{ $expiringCount }}</h2>
+                        <h2 class="text-4xl font-extrabold text-gray-900">{{ $expiringCount ?? 0 }}</h2>
                     </div>
                 </div>
                 <p class="text-xs font-semibold text-gray-600 mt-5 pt-3 border-t border-gray-100 flex items-center">
@@ -69,7 +69,7 @@
                     </div>
                     <div class="text-right">
                         <p class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-0.5">Total Credit</p>
-                        <h2 class="text-2xl font-extrabold text-gray-900">PKR {{ number_format($totalCreditDue, 0) }}</h2>
+                        <h2 class="text-2xl font-extrabold text-gray-900">PKR {{ number_format($totalCreditDue ?? 0, 0) }}</h2>
                     </div>
                 </div>
                 <a href="{{ route('customers.index') }}" class="text-xs font-semibold text-gray-600 mt-5 pt-3 border-t border-gray-100 flex items-center hover:underline">
@@ -101,7 +101,7 @@
                 <div class="flex-grow overflow-y-auto">
                     <table class="min-w-full">
                         <tbody class="divide-y divide-gray-100">
-                            @foreach($topSelling as $item)
+                            @foreach($topSelling ?? [] as $item)
                             <tr class="hover:bg-gray-50 transition-colors duration-200">
                                 <td class="py-4 font-semibold text-gray-800 text-sm">
                                     {{ $item->name }}
@@ -151,7 +151,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // 1. Line Chart with Gradient Fill
-    const salesTrendData = {!! json_encode($salesTrend) !!};
+    const salesTrendData = {!! json_encode($salesTrend ?? '') !!};
     new Chart(document.getElementById('salesChart'), {
         type: 'line',
         data: {
@@ -192,7 +192,7 @@
     });
 
     // 2. Elegant Doughnut Chart
-    const categoryData = {!! json_encode($categoryBreakdown) !!};
+    const categoryData = {!! json_encode($categoryBreakdown ?? '') !!};
     new Chart(document.getElementById('inventoryChart'), {
         type: 'doughnut',
         data: {
