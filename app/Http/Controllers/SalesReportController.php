@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MedicineVariant;
 use App\Models\Sale;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -27,6 +28,7 @@ class SalesReportController extends Controller
         if ($status) {
             $query->where('status', $status);
         }
+          $lowStockCount = MedicineVariant::whereColumn('stock_level', '<=', 'reorder_level')->count();
 
         // 3. Get Results
         $sales = $query->latest('sale_date')->get();
@@ -52,7 +54,8 @@ class SalesReportController extends Controller
             'remainingDebt',
             'startDate',
             'endDate',
-            'chartData'
+            'chartData',
+            'lowStockCount'
         ));
     }
 }

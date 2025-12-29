@@ -45,11 +45,11 @@
                 <table class="w-full border-collapse text-sm">
                     <thead>
                         <tr class="bg-blue-600 text-white border-b border-gray-100 uppercase font-black text-[10px] tracking-widest">
-                            <th class="py-5 px-6 text-left">Customer Nomenclature</th>
-                            <th class="py-5 px-6 text-left">Phone Metadata</th>
+                            <th class="py-5 px-6 text-left">Customer </th>
+                            <th class="py-5 px-6 text-left">Phone</th>
                             <th class="py-5 px-6 text-right">Total Purchases</th>
                             <th class="py-5 px-6 text-right">Credit Balance</th>
-                            <th class="py-5 px-6 text-center">Protocol Actions</th>
+                            <th class="py-5 px-6 text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="customersTableBody" class="divide-y divide-gray-50 text-gray-800">
@@ -164,6 +164,19 @@
     let currentBalance = 0;
     let currentPage = 1;
     let debounceTimer;
+
+    // Custom Styled SweetAlert Mixin for "Toasts"
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
 
     // --- Modal Logic ---
     function openAnimate(m, b) {
@@ -294,13 +307,31 @@
     }
 
     window.deleteCustomer = (id, name) => {
-        if (confirm(`Permanently remove ${name}?`)) {
-            fetch(`/customers/${id}`, { 
-                method: 'POST', 
-                headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Content-Type': 'application/json' }, 
-                body: JSON.stringify({ _method: 'DELETE' }) 
-            }).then(() => fetchData(currentPage));
-        }
+        Swal.fire({
+            title: 'Delete Profile?',
+            text: `Confirming total removal of ${name}. This action is irreversible.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'DELETE PERMANENTLY',
+            customClass: {
+                popup: 'rounded-[30px]',
+                confirmButton: 'rounded-xl font-black uppercase text-[10px] tracking-widest px-6 py-3',
+                cancelButton: 'rounded-xl font-black uppercase text-[10px] tracking-widest px-6 py-3'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/customers/${id}`, { 
+                    method: 'POST', 
+                    headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ _method: 'DELETE' }) 
+                }).then(() => {
+                    fetchData(currentPage);
+                    Toast.fire({ icon: 'success', title: 'Profile purged successfully' });
+                });
+            }
+        });
     }
 
     window.viewCustomerHistory = (id) => {
@@ -351,7 +382,10 @@
     window.submitManualTransaction = async () => {
         const amountInput = document.getElementById('manualAmount');
         const amount = amountInput.value;
-        if (!amount || amount <= 0) return alert("Enter valid amount");
+        if (!amount || amount <= 0) {
+            return Toast.fire({ icon: 'error', title: 'Enter a valid valuation amount' });
+        }
+        
         const btn = document.getElementById('manualSubmitBtn');
         btn.disabled = true; btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
         try {
@@ -360,7 +394,12 @@
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
                 body: JSON.stringify({ type: document.getElementById('manualType').value, amount })
             });
-            if (res.ok) { amountInput.value = ''; viewCustomerHistory(activeCustomerId); fetchData(currentPage); }
+            if (res.ok) { 
+                amountInput.value = ''; 
+                viewCustomerHistory(activeCustomerId); 
+                fetchData(currentPage); 
+                Toast.fire({ icon: 'success', title: 'Ledger Synced' });
+            }
         } finally { btn.disabled = false; btn.innerHTML = 'Sync Account'; }
     }
 
@@ -378,13 +417,28 @@
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json', 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            if (res.ok) { closeCustomerModal(); fetchData(currentPage); }
-            else { const result = await res.json(); document.getElementById("formAlerts").innerHTML = `<div class="p-4 bg-red-50 text-red-600 rounded-2xl border border-red-100 text-[10px] font-black uppercase">${result.message}</div>`; }
+            if (res.ok) { 
+                closeCustomerModal(); 
+                fetchData(currentPage); 
+                Toast.fire({ icon: 'success', title: 'Profile manifest updated' });
+            }
+            else { 
+                const result = await res.json(); 
+                document.getElementById("formAlerts").innerHTML = `<div class="p-4 bg-red-50 text-red-600 rounded-2xl border border-red-100 text-[10px] font-black uppercase">${result.message}</div>`; 
+                Toast.fire({ icon: 'error', title: 'Registration failed' });
+            }
         } finally { btn.disabled = false; btn.innerHTML = 'Confirm'; }
     }
 
     window.sendWhatsAppReminder = () => {
-        if (currentBalance <= 0) return alert("Account is clear!");
+        if (currentBalance <= 0) {
+            return Swal.fire({
+                icon: 'info',
+                title: 'Clean Ledger',
+                text: 'This account has no outstanding debt.',
+                customClass: { popup: 'rounded-[30px]' }
+            });
+        }
         const msg = `Dear ${activeCustomerName}, your pending balance is PKR ${currentBalance.toLocaleString()}. Please clear it at your earliest convenience. Thank you!`;
         window.open(`https://wa.me/${activeCustomerPhone}?text=${encodeURIComponent(msg)}`, '_blank');
     }

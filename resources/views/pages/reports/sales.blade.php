@@ -44,8 +44,8 @@
             @php
                 $cards = [
                     ['Total Revenue', 'PKR '.number_format($totalRevenue, 0), 'fa-chart-line', 'blue'],
-                    ['Cash In Hand', 'PKR '.number_format($cashReceived, 0), 'fa-wallet', 'emerald'],
-                    ['Debt/Credit', 'PKR '.number_format($remainingDebt, 0), 'fa-hand-holding-dollar', 'red'],
+                    ['Low Stock Items', $lowStockCount, 'fa-wallet', 'red'],
+                    ['Debt/Credit', 'PKR '.number_format($remainingDebt, 0), 'fa-hand-holding-dollar', 'emerald'],
                     ['Total Orders', $totalSalesCount, 'fa-file-invoice', 'indigo'],
                 ];
             @endphp

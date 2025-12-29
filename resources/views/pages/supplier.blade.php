@@ -45,11 +45,11 @@
                     <table class="w-full border-collapse text-sm">
                         <thead>
                             <tr class="bg-blue-600 text-white border-b border-gray-100 uppercase font-black text-[10px] tracking-widest">
-                                <th class="py-5 px-6 text-left">Supplier Nomenclature</th>
-                                <th class="py-5 px-6 text-left">Liaison Person</th>
-                                <th class="py-5 px-6 text-left">Contact Metadata</th>
-                                <th class="py-5 px-6 text-right">Balance Valuation</th>
-                                <th class="py-5 px-6 text-center">Protocol Actions</th>
+                                <th class="py-5 px-6 text-left">Supplier</th>
+                                <th class="py-5 px-6 text-left">Contact Person</th>
+                                <th class="py-5 px-6 text-left">Phone & Email</th>
+                                <th class="py-5 px-6 text-right">Credit Balance</th>
+                                <th class="py-5 px-6 text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody id="suppliersTableBody" class="divide-y divide-gray-50 text-gray-800">
@@ -179,6 +179,19 @@
     const tableBody = document.getElementById("suppliersTableBody");
     const cardContainer = document.getElementById("suppliersCardContainer");
 
+    // Custom Styled SweetAlert Mixin for "Toasts"
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    });
+
     // Modal Animations
     function openModal() {
         modal.classList.replace("hidden", "flex");
@@ -233,7 +246,6 @@
                         const balColor = bal > 0 ? 'text-red-600' : 'text-emerald-600';
                         const balBg = bal > 0 ? 'bg-red-50 border-red-100' : 'bg-emerald-50 border-emerald-100';
 
-                        // DESKTOP
                         tableHtml += `
                             <tr class="hover:bg-blue-50/40 transition group">
                                 <td class="py-5 px-6 font-black text-gray-900 uppercase tracking-tighter italic text-sm">${s.supplier_name}</td>
@@ -254,7 +266,6 @@
                                 </td>
                             </tr>`;
 
-                        // MOBILE
                         cardHtml += `
                             <div class="bg-white p-5 rounded-[30px] border border-gray-100 shadow-sm flex flex-col gap-3">
                                 <div class="flex justify-between items-start">
@@ -355,7 +366,10 @@
 
     async function submitManualTransaction() {
         const amount = document.getElementById('manualAmount').value;
-        if (!amount || amount <= 0) return alert("Enter valid amount");
+        if (!amount || amount <= 0) {
+            return Toast.fire({ icon: 'error', title: 'Enter a valid valuation amount' });
+        }
+        
         const btn = document.getElementById('manualSubmitBtn');
         btn.disabled = true;
         btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
@@ -368,8 +382,12 @@
             });
             if (res.ok) {
                 document.getElementById('manualAmount').value = '';
-                viewSupplierHistory(activeSupplierId); fetchData(currentPage);
+                viewSupplierHistory(activeSupplierId); 
+                fetchData(currentPage);
+                Toast.fire({ icon: 'success', title: 'Ledger Synced Successfully' });
             }
+        } catch (error) {
+            Toast.fire({ icon: 'error', title: 'Sync Protocol Failed' });
         } finally { btn.disabled = false; btn.innerHTML = 'Sync Account'; }
     }
 
@@ -389,10 +407,15 @@
                 headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json', 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
             });
-            if (res.ok) { closeModal(); fetchData(activeSupplierId ? currentPage : 1); }
+            if (res.ok) { 
+                closeModal(); 
+                fetchData(activeSupplierId ? currentPage : 1); 
+                Toast.fire({ icon: 'success', title: 'Supplier Manifest Updated' });
+            }
             else {
                 const err = await res.json();
                 document.getElementById("formAlerts").innerHTML = `<div class="p-4 bg-red-50 text-red-600 rounded-2xl border border-red-100 text-[10px] font-black uppercase">${err.message}</div>`;
+                Toast.fire({ icon: 'error', title: 'Update Error' });
             }
         } finally { saveButton.disabled = false; saveButton.innerHTML = 'Confirm'; }
     }
@@ -411,10 +434,31 @@
     }
 
     function deleteSupplier(id, name) {
-        if (confirm(`Remove supplier "${name}"?`)) {
-            fetch(`/suppliers/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' }, body: JSON.stringify({ _method: 'DELETE' }) })
-                .then(() => fetchData(currentPage));
-        }
+        Swal.fire({
+            title: 'Delete Supplier?',
+            text: `Confirming total removal of "${name}". All historical data will be purged.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc2626',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'PURGE DATA',
+            customClass: {
+                popup: 'rounded-[30px]',
+                confirmButton: 'rounded-xl font-black uppercase text-[10px] tracking-widest px-6 py-3',
+                cancelButton: 'rounded-xl font-black uppercase text-[10px] tracking-widest px-6 py-3'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/suppliers/${id}`, { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' }, 
+                    body: JSON.stringify({ _method: 'DELETE' }) 
+                }).then(() => {
+                    fetchData(currentPage);
+                    Toast.fire({ icon: 'success', title: 'Supplier Purged' });
+                });
+            }
+        });
     }
 
     document.addEventListener('DOMContentLoaded', () => fetchData(1));
